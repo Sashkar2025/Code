@@ -1,0 +1,87 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.mavenproject8;
+import java.util.Scanner;
+
+/**
+ *
+ * @author sashkar2025
+ */
+public class Mavenproject8 {
+
+    public static void main(String[] args) {
+    
+        Scanner scan = new Scanner(System.in);
+       
+        //Input
+        
+        System.out.println("What is the total amount of money?");
+        double dblAmount = scan.nextDouble();
+        /*This asks the user what the total amount of money is 
+        and sets their input as a variable */
+       
+        //Now Tens
+        
+        double tens = 10; //Setting a variable equal to the dollar amount of a ten dollar bill
+        double amountOfTens = (float)dblAmount/tens; //dividing the initial input by ten to find the number of ten dollar bills
+        double remainderFromTens = dblAmount%tens; //Creating a variable for the remainder of the initial input after dividing by ten
+        
+        System.out.println((int)amountOfTens + " Ten dollar bill(s)"); //Printing appropriate amount of bills
+        
+        //Now Fives
+        
+        double fives = 5;
+        double amountOfFives = (float)remainderFromTens/fives;
+        double remainderFromFives = remainderFromTens%fives;
+        
+        System.out.println((int)amountOfFives + " Five dollar bill(s)");
+        
+        //Now Ones
+        
+        double ones = 1;
+        double amountOfOnes = (float)remainderFromFives/ones;
+        double remainderFromOnes = remainderFromFives%ones;
+        
+        System.out.println((int)amountOfOnes + " One dollar bill(s)");
+        
+        //Now Cents
+        
+        double hundreds = 100;
+        double amountInCents = remainderFromOnes*hundreds; //To avoid working in decimal places, the decimal remainder is multiplied by 100
+        
+        //Now Quarters
+        
+        double quarters = 25;
+        double amountOfQuarters = (float)amountInCents/quarters;
+        double remainderFromQuarters = amountInCents%quarters;
+        
+        System.out.println((int)amountOfQuarters + " Quarter(s)");
+        
+        //Now Dimes
+        
+        double dimes = 10;
+        double amountOfDimes = (float)remainderFromQuarters/dimes;
+        double remainderFromDimes = remainderFromQuarters%dimes;
+        
+        System.out.println((int)amountOfDimes + " Dime(s)");
+       
+        //Now Nickles
+        
+        double nickles = 5;
+        double amountOfNickles = (float)remainderFromDimes/nickles;
+        double remainderFromNickles = remainderFromDimes%nickles;
+        
+        System.out.println((int)amountOfNickles + " Nickle(s)");
+        
+        //Finally Pennies
+        
+        double pennies = 1;
+        double amountOfPennies = (float)remainderFromNickles/pennies;
+        
+        System.out.println((int)amountOfPennies + " Pennie(s)");
+       }
+    
+}
+
