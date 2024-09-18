@@ -1,0 +1,30 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.strings;
+
+/**
+ *
+ * @author sashkar2025
+ */
+public class Strings {
+
+    public static void main(String[] args) {
+        String myName = new String("Sam Ashkar");
+        
+        System.out.println("My name is \"" + myName + "\"");
+        
+        System.out.println("My name is " +myName.length());
+        
+        System.out.println("My name in upper case is \"" +myName.toUpperCase()+ "\"");
+        
+        System.out.println("My name in lower case is \"" +myName.toLowerCase()+ "\"");
+        
+        System.out.println("The first letter in my name is \"" +myName.charAt(0) + "\"");
+        
+        System.out.println("The last letter in my name is \"" +myName.charAt(9) + "\"");
+        
+        System.out.println("The index of the space between the names is \"" +myName.indexOf(" ") + "\"");
+    }
+}
