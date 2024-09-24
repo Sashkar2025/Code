@@ -1,0 +1,85 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.mavenproject3;
+import java.util.Random; // Import the Random class
+import java.util.Scanner; // Import the Scanner class
+/**
+ *
+ * @author Sam Ashkar
+ */
+public class Mavenproject3 {
+
+    public static void main(String[] args)
+    {
+        //Decalre random number generator
+        Random generator = new Random();
+        // Create a Scanner for user input
+        Scanner scanner = new Scanner(System.in); 
+        
+    String input;
+    
+     do {
+        //Randome three digit number without 8s or 9s
+        int num1;
+        
+        num1 = generator.nextInt(8);
+        int firstNumberHundreds = num1*100;
+        
+        num1 = generator.nextInt(8);
+        int firstNumberTens = num1*10;
+       
+        num1 = generator.nextInt(8);
+        int firstNumberOnes = num1*1;
+        
+        if(firstNumberHundreds <= 0){
+            if(firstNumberTens <= 0){
+                System.out.print("0" + "0" + firstNumberOnes + "-");
+            }else{
+                System.out.print("0" + (firstNumberTens + firstNumberOnes) + "-");  
+            }                        
+        }else{
+            System.out.print(firstNumberHundreds + firstNumberTens + firstNumberOnes + "-");      
+        }
+        
+        //Random number from 0 to 655
+        num1 = generator.nextInt(656);
+        
+        if(num1 <= 9){
+            System.out.print("0" + "0" + num1 + "-");
+        }else{
+            if(num1 <=99){  
+                System.out.print("0" + num1 + "-");
+            }else{ 
+                System.out.print(num1 + "-");
+            }  
+        }
+        
+        //Random number from 0 to 9999
+        num1 = generator.nextInt(10000);
+       
+        if(num1 <= 9){
+            System.out.println("0" + "0" + "0" + num1);
+        }else{
+            if(num1 <= 99){  
+                System.out.println("0" + "0" + num1);
+            }else{ 
+                if(num1 <= 999){
+                    System.out.println("0" + num1);
+                }else{
+                    System.out.println(num1);
+                }  
+            }  
+        }
+    
+        //Ask the user if they want to generate a new number
+        System.out.print("Press 'p' to generate a new phone number or any other key to exit: ");
+        input = scanner.nextLine(); 
+        
+        } while (input.equalsIgnoreCase("p")); // Loop until the user inputs something other than "p"
+
+        scanner.close(); // Close the scanner
+        
+    }
+}
