@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.mavenproject3;
+package com.mycompany.mavenproject10;
 import java.util.Random; // Import the Random class
 import java.util.Scanner; // Import the Scanner class
 /**
  *
  * @author Sam Ashkar
  */
-public class Mavenproject3 {
+public class Mavenproject10 {
 
     public static void main(String[] args)
     {
@@ -71,15 +71,15 @@ public class Mavenproject3 {
                     System.out.println(num1);
                 }  
             }  
-        }
-    
+        } 
+
         //Ask the user if they want to generate a new number
-        System.out.print("Press 'p' to generate a new phone number or any other key to exit: ");
+        System.out.print("Press 'p' for a new phone number: ");
         input = scanner.nextLine(); 
         
-        } while (input.equalsIgnoreCase("p")); // Loop until the user inputs something other than "p"
+        } while (input.equalsIgnoreCase("p")); // Loop 
 
-        scanner.close(); // Close the scanner
+        scanner.close(); // Close scanner
         
     }
 }
