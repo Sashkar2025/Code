@@ -1,0 +1,40 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.mavenproject11;
+import java.util.Random; // Import the Random class
+import java.util.Scanner; // Import the Scanner class
+/**
+ *
+ * @author Sam Ashkar
+ */
+public class Mavenproject11 {
+
+    public static void main(String[] args)
+    {
+        //Decalre random number generator
+        Random generator = new Random();
+        // Create a Scanner for user input
+        Scanner scanner = new Scanner(System.in); 
+        
+    String input;
+    
+     do {
+        
+        //Randome number 1-6
+        
+        int num1;
+        num1 = generator.nextInt(6) + 1;
+        System.out.println(num1);
+
+        //Ask the user if they want to generate a new number
+        System.out.print("Press 'r' roll the dice again: ");
+        input = scanner.nextLine(); 
+        
+        } while (input.equalsIgnoreCase("r")); // Loop 
+
+        scanner.close(); // Close scanner
+        
+    }
+}
