@@ -1,69 +1,86 @@
-import java.util.Scanner;
-import java.util.Random;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
 
-public class MathCalculations {
-    
-    private static final double SPEED_OF_LIGHT = 299792458; // speed of light in m/s
+package com.mycompany.math2;
+import java.util.Random;
+/**
+ *
+ * @author sashkar2025
+ */
+public class Math2 {
 
     public static void main(String[] args) {
-        Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
-
-        // 1. Generate a random number in the range 0 to 90 inclusive
-        int randomAngle = random.nextInt(91); // 0 to 90 inclusive
-        double sineValue = Math.sin(Math.toRadians(randomAngle));
-        double cosineValue = Math.cos(Math.toRadians(randomAngle));
-        double tangentValue = Math.tan(Math.toRadians(randomAngle));
-
-        // Display sine, cosine, and tangent values rounded to 3 decimal places
-        System.out.printf("Number: %d Sine: %.3f Cosine: %.3f Tangent: %.3f%n",
-                randomAngle, round(sineValue, 3), round(cosineValue, 3), round(tangentValue, 3));
-
-        // 2. Generate a random real number for radius (1.0 to 20.0)
-        double radius = 1.0 + (19.0 * random.nextDouble());
-        double area = Math.PI * Math.pow(radius, 2);
-        double volume = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
-
-        // Display area and volume rounded to 2 decimal places
-        System.out.printf("Radius: %.2f Area: %.2f Volume: %.2f%n", radius, round(area, 2), round(volume, 2));
-
-        // 3. Generate a random real number in the range 1000.0 to 100,000,000.0
-        double highValue = 1000.0 + (random.nextDouble() * (100000000.0 - 1000.0));
-        double sqrtValue = Math.sqrt(highValue);
-        double lnValue = Math.log(highValue);
-        double log10Value = Math.log10(highValue);
-
-        // Display square root, natural log, and log10 rounded to 5 decimal places
-        System.out.printf("High Value: %.2f Square Root: %.5f Natural Log: %.5f Log10: %.5f%n",
-                highValue, round(sqrtValue, 5), round(lnValue, 5), round(log10Value, 5));
-
-        // 4. Calculate mass required to generate that much energy
-        double mass = highValue / (SPEED_OF_LIGHT * SPEED_OF_LIGHT); // E = mc^2 => m = E/c^2
-        System.out.printf("Mass (grams): %.5f%n", roundAvoid(mass, 5));
-
-        // 5. User input for power calculation
-        System.out.print("Enter a real number: ");
-        double userNumber = scanner.nextDouble();
-        System.out.print("Enter an integer exponent: ");
-        int exponent = scanner.nextInt();
-        double powerResult = Math.pow(userNumber, exponent);
+        Random generator = new Random();
         
-        System.out.print("Enter the number of decimal places for rounding: ");
-        int decimalPlaces = scanner.nextInt();
-        System.out.printf("Result: %.5f%n", roundAvoid(powerResult, decimalPlaces));
+        double num1;
+        double numSin;
+        double numCos;
+        double numTan;
 
-        scanner.close();
+        //number between 0-90
+        num1 = generator.nextInt(91);
+        
+        numSin = Math.sin(num1);
+        numSin = roundAvoid(numSin, 3);
+        
+        numCos = Math.cos(num1);
+        numCos = roundAvoid(numCos, 3);
+        
+        numTan = Math.tan(num1);
+        numTan = roundAvoid(numTan, 3);
+        
+        System.out.println("Number:" + num1 + " Sine:" + numSin + " Cosine:" + numCos + " Tangent:" + numTan);
+        
+        //Generate number 1.0-20.0 ofr the radius of a circle, Find area of that circle, volume of a sphere of that radius.
+        double num2 = generator.nextDouble(20.0);
+        num2 = roundAvoid(num2, 1);
+     
+        double num3 = num2;
+        System.out.println("The number is " + num2);
+        
+        //Area of a circle is Pi(r)^2
+        num2 = num2*num2;
+        num2 = num2*Math.PI;
+        
+        num2 = roundAvoid(num2, 3);
+        System.out.println("The area of the circle is " + num2);
+        
+        //Area of a sphere is 4/3(Pi)(r)^3
+        num3 = num3*num3*num3;
+        num3 = num3*Math.PI;
+        num3 = num3*4;
+        num3 = num3/3;
+        
+        num3 = roundAvoid(num3, 3);
+        System.out.println("The volume of the sphere is " + num3);
+        
+        //Generate number 1000.0 - 100,000,000.0, it's square root, it's natural log, Log10 
+        
+        double num4 = generator.nextDouble(999999001.0) + 1000.0;
+        num4 = roundAvoid(num4, 5);
+        
+        double num4Root = Math.sqrt(num4);
+        num4Root = roundAvoid(num4Root, 5);
+        
+        double num4NLog = Math.log(num4);
+        num4NLog = roundAvoid(num4NLog, 5);
+        
+        double num4Log10 = Math.log10(num4);
+        num4Log10 = roundAvoid(num4Log10, 5);
+        
+        System.out.println("The number is " + num4 + " It's square root is " + num4Root + " Its natural log is " + num4NLog + " It's log base 10 is " + num4Log10);
+        
+        //Use same large number from before as energy, use (E = mc ^2). Hint, if speed of light (c) is in m/s, the mass will be in grams - so assume your large number is in joules (j). Look up the value of c in m/s. Use the "roundAvoid" method to output this number to a user defined number of decimal places.
+        
+        
+        
+        
+        
+        
     }
-
-    // Method to round a number to a specified number of decimal places
-    public static double round(double value, int places) {
-        double scale = Math.pow(10, places);
-        return Math.round(value * scale) / scale;
-    }
-
-    // Method to round a number to a specified number of decimal places without rounding up
     public static double roundAvoid(double value, int places) {
         double scale = Math.pow(10, places);
-        return Math.floor(value * scale) / scale;
+        return Math.round(value * scale) / scale;
     }
 }
