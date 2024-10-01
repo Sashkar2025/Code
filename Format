@@ -1,0 +1,54 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.format1;
+import java.util.Scanner;
+import java.text.NumberFormat;
+/**
+ *
+ * @author sashkar2025
+ */
+public class Format1 {
+
+    public static void main(String[] args) {
+       
+        Scanner scan = new Scanner(System.in);
+        
+        
+        //Percent of boys and girls from amount of girls and total amount
+        System.out.println("1. Total number of students? ");
+        double totalStudents = scan.nextInt();
+        
+        System.out.println("How many girls? ");
+        double numberOfGirls = scan.nextInt();
+        
+        double percentGirls = numberOfGirls/totalStudents;
+        
+        double numberOfBoys = totalStudents-numberOfGirls;
+        
+        double percentBoys = numberOfBoys/totalStudents;
+        
+        NumberFormat fmt1 = NumberFormat.getPercentInstance();
+
+        System.out.println("Percent gilrs:" + fmt1.format(percentGirls) + " Percent boys:" + fmt1.format(percentBoys));
+        
+        //Input dollars output in pounds, output exchange rate
+        System.out.println("2. Amount of money? ");
+        double dollarsAmount = scan.nextDouble();
+
+        NumberFormat fmt2 = NumberFormat.getInstance(Locale.UK);
+      
+    /* 1. Ask for total number of students at a school (any school). Now ask for the number of girls at that school. Using Number formatting, output the % of girls and % of boys at that school.
+
+    2.Ask for total amout of money in Dollars and Cents. The method must convert this value to British Pounds (gbp - Exchange rate on 10/03 is 0.83 pence to the  $). Output the number of Pounds, mentioning the exchange rate, in a British (locale) number format.
+
+    3. Ask for an integer from 0 to 15, and based on the input, format the number Pi (from the Math class) to that number of decimal places, and print it out appropriately.
+
+    4. Generate a random number from 100,000,000 to 999e18as a decimal number (no scientific notation). 
+
+    Remember to include relevant comments. Keep your indentations clear. */
+    
+
+    }
+}
