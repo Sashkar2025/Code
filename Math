@@ -16,75 +16,86 @@ public class Math2 {
         Scanner scan = new Scanner(System.in);
         
         int num1;
-        double numSin;
-        double numCos;
-        double numTan;
+        double num1Sin;
+        double num1Cos;
+        double num1Tan;
 
-        //number between 0-90
+        //number between 0-90, trigonmetric values
         num1 = generator.nextInt(91);
         
-        numSin = Math.sin(num1);
-        numSin = roundAvoid(numSin, 3);
+        num1Sin = Math.sin(num1);
+        num1Sin = roundAvoid(num1Sin, 3);
         
-        numCos = Math.cos(num1);
-        numCos = roundAvoid(numCos, 3);
+        num1Cos = Math.cos(num1);
+        num1Cos = roundAvoid(num1Cos, 3);
         
-        numTan = Math.tan(num1);
-        numTan = roundAvoid(numTan, 3);
+        num1Tan = Math.tan(num1);
+        num1Tan = roundAvoid(num1Tan, 3);
         
-        System.out.println("Number:" + num1 + " Sine:" + numSin + " Cosine:" + numCos + " Tangent:" + numTan);
+        System.out.println("1. Number:" + num1 + " Sine:" + num1Sin + " Cosine:" + num1Cos + " Tangent:" + num1Tan);
         
-        //Generate number 1.0-20.0 ofr the radius of a circle, Find area of that circle, volume of a sphere of that radius.
+        //Generate number 1.0-20.0 as the radius of a circle, Find area of that circle, volume of a sphere of that radius
         double num2 = generator.nextDouble(20.0);
         num2 = roundAvoid(num2, 1);
      
-        double num3 = num2;
-        double num8 = num3;
+        double numArea = num2;
+        double numVolume = num2;
+        double numPrint = num2;
         
         //Area of a circle is Pi(r)^2
-        num2 = num2*num2;
-        num2 = num2*Math.PI;
+        numArea = numArea*numArea;
+        numArea = numArea*Math.PI;
+        numArea = roundAvoid(numArea, 3);
         
-        num2 = roundAvoid(num2, 3);
+        //Volume of a sphere is 4/3(Pi)(r)^3
+        numVolume = numVolume*numVolume*numVolume;
+        numVolume = numVolume*Math.PI;
+        numVolume = numVolume*4;
+        numVolume = numVolume/3;
+        numVolume = roundAvoid(numVolume, 3);
         
-        //Area of a sphere is 4/3(Pi)(r)^3
-        num3 = num3*num3*num3;
-        num3 = num3*Math.PI;
-        num3 = num3*4;
-        num3 = num3/3;
+        System.out.println("2. Radius:" + numPrint + " Area of circle:" + numArea + " Volume of sphere:" + numVolume);
         
-        num3 = roundAvoid(num3, 3);
-        System.out.println("Number:" + num8 + " Area of circle is " + num2 + " Volume of sphere is " + num3);
+        //Generate number 1000.0 - 100,000,000.0, it's square root, it's natural log, it's Log10 
+        double num3 = generator.nextDouble(999999001.0) + 1000.0;
+        num3 = roundAvoid(num3, 5);
         
-        //Generate number 1000.0 - 100,000,000.0, it's square root, it's natural log, Log10 
+        double num3Root = Math.sqrt(num3);
+        num3Root = roundAvoid(num3Root, 5);
         
-        double num4 = generator.nextDouble(999999001.0) + 1000.0;
-        num4 = roundAvoid(num4, 5);
+        double num3NLog = Math.log(num3);
+        num3NLog = roundAvoid(num3NLog, 5);
         
-        double num4Root = Math.sqrt(num4);
-        num4Root = roundAvoid(num4Root, 5);
+        double num3Log10 = Math.log10(num3);
+        num3Log10 = roundAvoid(num3Log10, 5);
         
-        double num4NLog = Math.log(num4);
-        num4NLog = roundAvoid(num4NLog, 5);
+        System.out.println("3. Number:" + num3 + " Square root:" + num3Root + " Natural log:" + num3NLog + " Log base 10:" + num3Log10);
         
-        double num4Log10 = Math.log10(num4);
-        num4Log10 = roundAvoid(num4Log10, 5);
-        
-        System.out.println("Number:" + num4 + " Square root is " + num4Root + " Natural log is " + num4NLog + " Log base 10 is " + num4Log10);
-        
-        //Use same large number from before as energy, use (E = mc ^2), (c) is a constatn speed of light, solve for mass
-        
-        System.out.println("How many decimal places? ");
-        int IntAmount = scan.nextInt();
+        //Use same large number from before as energy, use (E = mc ^2), (c) is a constant speed of light, solve for mass
+        System.out.println("4. How many decimal places? ");
+        int decimalAmount1 = scan.nextInt();
 
-        double sol = 299792458;
-        double sol2 = sol*sol;
-        double sol3 = num4/sol2;
-        sol3 = roundAvoid(sol3, IntAmount);
+        double num4 = 299792458;
+        num4 = num4*num4;
+        num4 = num3/num4;
+        num4 = roundAvoid(num4, decimalAmount1);
         
-        System.out.println(sol3 + " grams is needed to generate " + num4 + " joules of energy");
+        System.out.println(num4 + " grams is needed to generate " + num3 + " joules of energy");
         
-        //Use a scanner to get a real number value and an integer input by the user. Output the value to the power of the integer, using the Math Class methods, again rounded to a user input number of decimal places.
+        //real number value and an integer input, output value to the power of the integer, rounded to input integer
+        System.out.println("5. Real number value? ");
+        double realNumber = scan.nextDouble();
+        
+        System.out.println("Int power value? ");
+        int powerValue = scan.nextInt();
+
+        System.out.println("Decimal places? ");
+        int decimalAmount2 = scan.nextInt();
+        
+        double result = Math.pow(realNumber, powerValue);
+        result = roundAvoid(result, decimalAmount2);
+        
+        System.out.println("Number:" + realNumber + " Power:" + powerValue + " Decimal places:" + decimalAmount2 + " Result:" + result);
         
     }
     public static double roundAvoid(double value, int places) {
