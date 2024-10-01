@@ -4,6 +4,7 @@
 
 package com.mycompany.math2;
 import java.util.Random;
+import java.util.Scanner;
 /**
  *
  * @author sashkar2025
@@ -12,8 +13,9 @@ public class Math2 {
 
     public static void main(String[] args) {
         Random generator = new Random();
+        Scanner scan = new Scanner(System.in);
         
-        double num1;
+        int num1;
         double numSin;
         double numCos;
         double numTan;
@@ -37,14 +39,13 @@ public class Math2 {
         num2 = roundAvoid(num2, 1);
      
         double num3 = num2;
-        System.out.println("The number is " + num2);
+        double num8 = num3;
         
         //Area of a circle is Pi(r)^2
         num2 = num2*num2;
         num2 = num2*Math.PI;
         
         num2 = roundAvoid(num2, 3);
-        System.out.println("The area of the circle is " + num2);
         
         //Area of a sphere is 4/3(Pi)(r)^3
         num3 = num3*num3*num3;
@@ -53,7 +54,7 @@ public class Math2 {
         num3 = num3/3;
         
         num3 = roundAvoid(num3, 3);
-        System.out.println("The volume of the sphere is " + num3);
+        System.out.println("Number:" + num8 + " Area of circle is " + num2 + " Volume of sphere is " + num3);
         
         //Generate number 1000.0 - 100,000,000.0, it's square root, it's natural log, Log10 
         
@@ -69,14 +70,21 @@ public class Math2 {
         double num4Log10 = Math.log10(num4);
         num4Log10 = roundAvoid(num4Log10, 5);
         
-        System.out.println("The number is " + num4 + " It's square root is " + num4Root + " Its natural log is " + num4NLog + " It's log base 10 is " + num4Log10);
+        System.out.println("Number:" + num4 + " Square root is " + num4Root + " Natural log is " + num4NLog + " Log base 10 is " + num4Log10);
         
-        //Use same large number from before as energy, use (E = mc ^2). Hint, if speed of light (c) is in m/s, the mass will be in grams - so assume your large number is in joules (j). Look up the value of c in m/s. Use the "roundAvoid" method to output this number to a user defined number of decimal places.
+        //Use same large number from before as energy, use (E = mc ^2), (c) is a constatn speed of light, solve for mass
         
+        System.out.println("How many decimal places? ");
+        int IntAmount = scan.nextInt();
+
+        double sol = 299792458;
+        double sol2 = sol*sol;
+        double sol3 = num4/sol2;
+        sol3 = roundAvoid(sol3, IntAmount);
         
+        System.out.println(sol3 + " grams is needed to generate " + num4 + " joules of energy");
         
-        
-        
+        //Use a scanner to get a real number value and an integer input by the user. Output the value to the power of the integer, using the Math Class methods, again rounded to a user input number of decimal places.
         
     }
     public static double roundAvoid(double value, int places) {
