@@ -5,6 +5,8 @@
 package com.mycompany.format1;
 import java.util.Scanner;
 import java.text.NumberFormat;
+import java.util.Locale;
+import java.util.Random;
 /**
  *
  * @author sashkar2025
@@ -37,8 +39,26 @@ public class Format1 {
         System.out.println("2. Amount of money? ");
         double dollarsAmount = scan.nextDouble();
 
-        NumberFormat fmt2 = NumberFormat.getInstance(Locale.UK);
-      
+        final double CONVERSION = 0.76;
+        double poundsAmount = dollarsAmount*CONVERSION;
+        
+        NumberFormat fmt2 = NumberFormat.getCurrencyInstance(Locale.UK);
+        
+        System.out.println("British Pounds with a 0.76 exchange Rate: " + fmt2.format(poundsAmount));
+        
+        //integer 0-15 input, Pi to that number of decimal places
+        System.out.println("3. Integer 0-15? ");
+        int decimalAmount = scan.nextInt();
+        
+        double piAmount = Math.PI;
+        piAmount = roundAvoid(piAmount, decimalAmount);
+        
+        System.out.println("Pi to " + decimalAmount + " decimal places:" + piAmount);
+        
+        //Random 100,000,000-999e18 as a decimal number 
+        double num1 = generator.nextDouble(1e-18) + 1000.0;
+        num3 = roundAvoid(num3, 5);
+     
     /* 1. Ask for total number of students at a school (any school). Now ask for the number of girls at that school. Using Number formatting, output the % of girls and % of boys at that school.
 
     2.Ask for total amout of money in Dollars and Cents. The method must convert this value to British Pounds (gbp - Exchange rate on 10/03 is 0.83 pence to the  $). Output the number of Pounds, mentioning the exchange rate, in a British (locale) number format.
@@ -49,6 +69,14 @@ public class Format1 {
 
     Remember to include relevant comments. Keep your indentations clear. */
     
-
+    
+    
+    
+    
+    
     }
+    public static double roundAvoid(double value, int places) {
+        double scale = Math.pow(10, places);
+        return Math.round(value * scale) / scale;
+    } 
 }
