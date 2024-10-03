@@ -1,0 +1,64 @@
+import java.text.NumberFormat;
+import java.util.Locale;
+import java.util.Random;
+import java.util.Scanner;
+
+public class SchoolStatistics {
+
+    public static void main(String[] args) {
+        // Single method to handle all tasks
+        performAllTasks();
+    }
+
+    private static void performAllTasks() {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        // 1. Calculate percentage of girls and boys in a school
+        System.out.print("Enter total number of students at the school: ");
+        int totalStudents = scanner.nextInt();
+
+        System.out.print("Enter number of girls at the school: ");
+        int numberOfGirls = scanner.nextInt();
+
+        if (totalStudents <= 0) {
+            System.out.println("Total students must be greater than 0.");
+            return;
+        }
+
+        int numberOfBoys = totalStudents - numberOfGirls;
+        double percentGirls = (double) numberOfGirls / totalStudents * 100;
+        double percentBoys = (double) numberOfBoys / totalStudents * 100;
+
+        System.out.printf("Percentage of girls: %.2f%%\n", percentGirls);
+        System.out.printf("Percentage of boys: %.2f%%\n", percentBoys);
+
+        // 2. Convert Dollars to British Pounds
+        System.out.print("Enter the total amount of money in Dollars (e.g., 100.50): ");
+        double totalMoney = scanner.nextDouble();
+        double exchangeRate = 0.83; // 83 pence to the dollar
+        double pounds = totalMoney * exchangeRate;
+
+        // Format the output in British currency format
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.UK);
+        System.out.printf("The total amount in British Pounds (Exchange Rate: 0.83) is: %s\n", currencyFormatter.format(pounds));
+
+        // 3. Format Pi to a specified number of decimal places
+        System.out.print("Enter an integer from 0 to 15 to format Pi: ");
+        int decimalPlaces = scanner.nextInt();
+
+        if (decimalPlaces >= 0 && decimalPlaces <= 15) {
+            String formatString = "%." + decimalPlaces + "f";
+            System.out.printf("Pi to %d decimal places: " + formatString + "\n", decimalPlaces, Math.PI);
+        } else {
+            System.out.println("Please enter a valid integer between 0 and 15.");
+        }
+
+        // 4. Generate a random number from 100,000,000 to 999,999,999
+        long randomNumber = 100_000_000 + (long)(random.nextDouble() * (999_999_999 - 100_000_000 + 1));
+        System.out.printf("Random number generated: %d\n", randomNumber);
+
+        // Close the scanner
+        scanner.close();
+    }
+}
