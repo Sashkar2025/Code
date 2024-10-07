@@ -1,0 +1,60 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.enumerated1;
+import java.util.Scanner;
+/**
+ *
+ * @author sashkar2025
+ */
+public class Enumerated1 {
+
+enum Days {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}   
+enum Months {January, Fedruary, March, April, May, June, July, August, September, October, November, December}    
+   
+    public static void main(String[] args) {
+        
+        
+        //enumeration of the days in the week, print out the days in the week (1-7)
+        
+        System.out.println("Day of the week: " + Days.Monday.name() + "  Number of the day: " + (Days.Monday.ordinal()+1));
+        System.out.println("Day of the week: " + Days.Tuesday.name() + "  Number of the day: " + (Days.Tuesday.ordinal()+1));
+        System.out.println("Day of the week: " + Days.Wednesday.name() + "  Number of the day: " + (Days.Wednesday.ordinal()+1));
+        System.out.println("Day of the week: " + Days.Thursday.name() + "  Number of the day: " + (Days.Thursday.ordinal()+1));
+        System.out.println("Day of the week: " + Days.Friday.name() + "  Number of the day: " + (Days.Friday.ordinal()+1));
+        System.out.println("Day of the week: " + Days.Saturday.name() + "  Number of the day: " + (Days.Saturday.ordinal()+1));
+        System.out.println("Day of the week: " + Days.Sunday.name() + "  Number of the day: " + (Days.Sunday.ordinal()+1));
+        
+        //enumeration of the months in the year, print out the "month in the year" numbers (1-12).
+        
+        System.out.println("\nMonth of the year: " + Months.January.name() + "  Number of the month: " + (Months.January.ordinal()+1));
+        System.out.println("Month of the year: " + Months.Fedruary.name() + "  Number of the month: " + (Months.Fedruary.ordinal()+1));
+        System.out.println("Month of the year: " + Months.March.name() + "  Number of the month: " + (Months.March.ordinal()+1));
+        System.out.println("Month of the year: " + Months.April.name() + "  Number of the month: " + (Months.April.ordinal()+1));
+        System.out.println("Month of the year: " + Months.May.name() + "  Number of the month: " + (Months.May.ordinal()+1));
+        System.out.println("Month of the year: " + Months.June.name() + "  Number of the month: " + (Months.June.ordinal()+1));
+        System.out.println("Month of the year: " + Months.July.name() + "  Number of the month: " + (Months.July.ordinal()+1));
+        System.out.println("Month of the year: " + Months.August.name() + "  Number of the month: " + (Months.August.ordinal()+1));
+        System.out.println("Month of the year: " + Months.September.name() + "  Number of the month: " + (Months.September.ordinal()+1));
+        System.out.println("Month of the year: " + Months.October.name() + "  Number of the month: " + (Months.October.ordinal()+1));
+        System.out.println("Month of the year: " + Months.November.name() + "  Number of the month: " + (Months.November.ordinal()+1));
+        System.out.println("Month of the year: " + Months.December.name() + "  Number of the month: " + (Months.December.ordinal()+1));
+        
+        //Ask for CCHS username, create a string of the username and year, parse the int value of that string, print your graduation year and the year after
+        
+        Scanner scan = new Scanner(System.in);
+        System.out.print("\n\nWhat is your CCHS username? ");
+        String userName = scan.next();
+        String gradYear = userName.substring(userName.length()-4, userName.length());
+        Integer gradYearInt = Integer.parseInt(gradYear);
+        
+        System.out.println("Graduation year: " + gradYearInt);
+        System.out.println("Year after graduation year: " + (gradYearInt + 1));
+        
+        //print "In computer language, you graduate in: " and then the binary string version of your graduation year
+        
+        System.out.println("\nIn computer language, you graduate in: " + Integer.toBinaryString(gradYearInt));
+        
+    }
+}
