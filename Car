@@ -1,0 +1,59 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.car1;
+
+/**
+ *
+ * @author sashkar2025
+ */
+public class Car1 {
+
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        System.out.println(myCar);
+    }
+}
+
+class Car{
+
+    String carBrand = "";
+    int enginePower = 0;
+    double maxSpeed = 0;
+    double price = 0;
+    
+    public void carBrand(String inBrand){
+    
+        carBrand = inBrand;
+    }    
+    
+    public void enginePower(int inPower){
+        
+        enginePower = inPower;
+    }
+    
+    public void maxSpeed(double inSpeed){
+        
+        maxSpeed = inSpeed;
+    }
+    
+    public void price(double inPrice){
+        
+        price = inPrice;
+    }
+    
+    
+    
+    
+    public String toString(){
+        String result = "test";
+        
+        result = "Car Brand: " + brand + "\n" +
+                "Speed: " + topSpeed;
+        return result;
+    }
+
+
+
+}
