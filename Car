@@ -2,58 +2,84 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.car1;
+package com.mycompany.car;
 
 /**
  *
- * @author sashkar2025
+ * @author Sam Ashkar
  */
-public class Car1 {
+public class Car {
 
+    // Car class definition
+    static class Car1 {
+        String carBrand;
+        int enginePower; // in Horse Power
+        double maxSpeed; // in MPH
+        double price; // in $
+
+        // Constructor to create a base car
+        public Car1(String carBrand, int enginePower, double maxSpeed, double price) {
+            this.carBrand = carBrand;
+            this.enginePower = enginePower;
+            this.maxSpeed = maxSpeed;
+            this.price = price;
+        }
+
+        // Getter and Setter methods
+        public String getCarBrand() {
+            return carBrand;
+        }
+
+        public void setCarBrand(String carBrand) {
+            this.carBrand = carBrand;
+        }
+
+        public int getEnginePower() {
+            return enginePower;
+        }
+
+        public void setEnginePower(int enginePower) {
+            this.enginePower = enginePower;
+        }
+
+        public double getMaxSpeed() {
+            return maxSpeed;
+        }
+
+        public void setMaxSpeed(double maxSpeed) {
+            this.maxSpeed = maxSpeed;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        // toString method to display car details
+        @Override
+        public String toString() {
+            return "Car Brand: " + carBrand +
+                    ", Engine Power: " + enginePower + " HP" +
+                    ", Max Speed: " + maxSpeed + " MPH" +
+                    ", Price: $" + price;
+        }
+    }
+
+    // Main method to drive the program
     public static void main(String[] args) {
-        Car myCar = new Car();
-        System.out.println(myCar);
-    }
-}
+        // Creating car objects
+        Car1 vwBug = new Car1("VW Bug", 50, 70, 20000);
+        Car1 toyotaPrius = new Car1("Toyota Prius", 121, 115, 25000);
+        Car1 bmwI8 = new Car1("BMW i8", 369, 155, 150000);
+        Car1 teslaModel3 = new Car1("Tesla Model 3", 283, 162, 40000);
 
-class Car{
-
-    String carBrand = "";
-    int enginePower = 0;
-    double maxSpeed = 0;
-    double price = 0;
-    
-    public void carBrand(String inBrand){
-    
-        carBrand = inBrand;
-    }    
-    
-    public void enginePower(int inPower){
-        
-        enginePower = inPower;
+        // Printing car details
+        System.out.println(vwBug);
+        System.out.println(toyotaPrius);
+        System.out.println(bmwI8);
+        System.out.println(teslaModel3);
     }
-    
-    public void maxSpeed(double inSpeed){
-        
-        maxSpeed = inSpeed;
-    }
-    
-    public void price(double inPrice){
-        
-        price = inPrice;
-    }
-    
-    
-    
-    
-    public String toString(){
-        String result = "test";
-        
-        result = "Car Brand: " + brand + "\n" +
-                "Speed: " + topSpeed;
-        return result;
-    }
-
-
-
 }
