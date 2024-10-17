@@ -1,85 +1,103 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
+/*
+1) What is the difference between a class and an object?
 
-package com.mycompany.car;
+A class serves as a template for creating objects with similar attributes and behaviors. 
+Objects are instances that comply with the structure and behavior defined by the class. 
 
+2) What happens when you pass an object to a print or println method?
+
+The print() or println() method internally calls the toString() method on the object. 
+This would result in the toString() method returning a string representation of the object, 
+which is then printed as the code is run.
+
+3) What is the scope of a variable in a method? In a class?
+
+The Scope of data is the place in a program where that data can be referenced. 
+Data declared in a class can be referenced anywhere in the class. Data declared in a 
+method can only be referenced in that method and is called local data.
+*/
+package com.mycompany.carclass;
 /**
  *
- * @author Sam Ashkar
+ * @author sashkar2025
  */
-public class Car {
-
-    // Car class definition
-    static class Car1 {
-        String carBrand;
-        int enginePower; // in Horse Power
-        double maxSpeed; // in MPH
-        double price; // in $
-
-        // Constructor to create a base car
-        public Car1(String carBrand, int enginePower, double maxSpeed, double price) {
-            this.carBrand = carBrand;
-            this.enginePower = enginePower;
-            this.maxSpeed = maxSpeed;
-            this.price = price;
-        }
-
-        // Getter and Setter methods
-        public String getCarBrand() {
-            return carBrand;
-        }
-
-        public void setCarBrand(String carBrand) {
-            this.carBrand = carBrand;
-        }
-
-        public int getEnginePower() {
-            return enginePower;
-        }
-
-        public void setEnginePower(int enginePower) {
-            this.enginePower = enginePower;
-        }
-
-        public double getMaxSpeed() {
-            return maxSpeed;
-        }
-
-        public void setMaxSpeed(double maxSpeed) {
-            this.maxSpeed = maxSpeed;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
-        }
-
-        // toString method to display car details
-        @Override
-        public String toString() {
-            return "Car Brand: " + carBrand +
-                    ", Engine Power: " + enginePower + " HP" +
-                    ", Max Speed: " + maxSpeed + " MPH" +
-                    ", Price: $" + price;
-        }
-    }
-
-    // Main method to drive the program
+public class CarClass {
     public static void main(String[] args) {
-        // Creating car objects
-        Car1 vwBug = new Car1("VW Bug", 50, 70, 20000);
-        Car1 toyotaPrius = new Car1("Toyota Prius", 121, 115, 25000);
-        Car1 bmwI8 = new Car1("BMW i8", 369, 155, 150000);
-        Car1 teslaModel3 = new Car1("Tesla Model 3", 283, 162, 40000);
+        // Car objects
+        Car vwBug = new Car();
+        Car toyotaPrius = new Car();
+        Car bmwI8 = new Car();
+        Car teslaModel3 = new Car();
 
-        // Printing car details
+        //Defining each car's specs   
+        vwBug.setCarBrand("VW Bug");
+        vwBug.setEnginePower(170);
+        vwBug.setMaxSpeed(112);
+        vwBug.setPrice(23000);
+
+        toyotaPrius.setCarBrand("Toyota prius");
+        toyotaPrius.setEnginePower(700);
+        toyotaPrius.setMaxSpeed(80);
+        toyotaPrius.setPrice(30000);
+
+        bmwI8.setCarBrand("BMW I8");
+        bmwI8.setEnginePower(20);
+        bmwI8.setMaxSpeed(300);
+        bmwI8.setPrice(4000);
+
+        teslaModel3.setCarBrand("Tesla Model 3");
+        teslaModel3.setEnginePower(300);
+        teslaModel3.setMaxSpeed(150);
+        teslaModel3.setPrice(50000);
+
+        // Printing car specs
         System.out.println(vwBug);
         System.out.println(toyotaPrius);
         System.out.println(bmwI8);
         System.out.println(teslaModel3);
     }
 }
+//Creating a car class
+class Car{
+    private String carBrand;
+    private int enginePower;
+    private double maxSpeed;
+    private double price;
+//Setters and getters for the variables 
+   public String getCarBrand() {
+            return carBrand;
+    }
+    public void setCarBrand(String input) {
+        carBrand = input;
+    }
+    public int getEnginePower() {
+        return enginePower;
+    }
+    public void setEnginePower(int input) {
+        enginePower = input;
+    }
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+    public void setMaxSpeed(double input) {
+        maxSpeed = input;
+    }
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double input) {
+        price = input;
+    }
+ //Creating a string to output the variales   
+    @Override
+    public String toString(){
+         return "Car Brand: " + carBrand +
+                    ", Engine Power: " + enginePower + " HP" +
+                    ", Max Speed: " + maxSpeed + " MPH" +
+                    ", Price: $" + price;
+    }
+}
+    
