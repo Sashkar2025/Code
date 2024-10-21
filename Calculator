@@ -1,0 +1,75 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.calculator;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author sashkar2025
+ */
+public class Calculator {
+
+   public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
+        
+        
+    System.out.println("What is the total amount of money?");
+    double dblMoney = scan.nextDouble();
+        
+    System.out.println("How many months worth of interest?");
+    int intMonths = scan.nextInt();   
+    
+    System.out.println(dblMoney + intMonths);
+    
+    
+    //returnAmountFirstMonth.amountFirstMonth;
+    
+    System.out.println("The first month, the borrower will have to pay $" + amountFirstMonth);
+    
+    }
+}
+
+class InterestRateCalculator{
+    public final double RATE = 0.1;
+    private double amountPreRate;
+    private int usedMonths;
+    private double amountFirstMonth;
+    
+    
+    public void setMoney(double dblMoney) {
+        amountPreRate = dblMoney;
+    }   
+          
+    public double getMoney() {
+        return amountPreRate;   
+    }
+    
+    public void setMonths(int intMonths) {
+        usedMonths = intMonths;
+    }
+    
+    public int getMonths() {
+        return usedMonths;
+    }
+   
+    
+    public void setMonthOne(int intMonths, double amountPreRate, double RATE) {
+        amountFirstMonth = (amountPreRate/usedMonths)*RATE;
+    }
+    
+    public double returnMonthOne() {
+        return amountFirstMonth;
+    }
+    
+    
+    
+    
+    
+}
+    
+//For each, print the amount payed that month, the amount payed so far, the remaining amount
+
+//multiply amount by rate, divide by number of months, output that amount, multi
