@@ -3,9 +3,9 @@
  */
 
 package com.mycompany.calculator;
-
+import java.text.NumberFormat;
 import java.util.Scanner;
-
+import java.util.Locale;
 /**
  *
  * @author sashkar2025
@@ -14,62 +14,76 @@ public class Calculator {
 
    public static void main(String[] args) {
     Scanner scan = new Scanner(System.in);
-        
-        
+    InterestRateCalculator calculator = new InterestRateCalculator();
+    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
+    
     System.out.println("What is the total amount of money?");
     double dblMoney = scan.nextDouble();
-        
+    
+    calculator.setMoney(dblMoney); //giving values to subclass
+
     System.out.println("How many months worth of interest?");
     int intMonths = scan.nextInt();   
     
-    System.out.println(dblMoney + intMonths);
+    calculator.setMonths(intMonths);
+      
+    for(int i = calculator.setRemainingMonth(); i > 0; i--){
+        
+        System.out.println("\nPayment: " + currencyFormatter.format(calculator.setPayment()));
+        System.out.println("Amount left: " + currencyFormatter.format(calculator.setRemainingMoney()));
+        System.out.println("Amount paid so far: " + currencyFormatter.format(calculator.setPayment())+ "\n"); 
+        
+    }
     
     
-    //returnAmountFirstMonth.amountFirstMonth;
     
-    System.out.println("The first month, the borrower will have to pay $" + amountFirstMonth);
+    
+    
+    
     
     }
 }
 
 class InterestRateCalculator{
     public final double RATE = 0.1;
-    private double amountPreRate;
-    private int usedMonths;
-    private double amountFirstMonth;
+    private double remainingMoney;
+    private int remainingMonth;
+    private double amountFinal;
     
-    
-    public void setMoney(double dblMoney) {
-        amountPreRate = dblMoney;
+    public void setMoney(double dblMoney) { //recieving input from main
+        remainingMoney = dblMoney;
     }   
           
-    public double getMoney() {
-        return amountPreRate;   
+    public double getMoney() { //giving values to main class
+        return remainingMoney;   
     }
     
     public void setMonths(int intMonths) {
-        usedMonths = intMonths;
+        remainingMonth = intMonths;
     }
     
     public int getMonths() {
-        return usedMonths;
+        return remainingMonth;
     }
    
-    
-    public void setMonthOne(int intMonths, double amountPreRate, double RATE) {
-        amountFirstMonth = (amountPreRate/usedMonths)*RATE;
+    public double setPayment() {
+        amountFinal = ((remainingMoney*RATE) + remainingMoney)/remainingMonth;
+        remainingMonth = remainingMonth - 1;
+        remainingMoney = remainingMoney - amountFinal;
+        
+        return amountFinal;
+    }
+
+    public int setRemainingMonth(){
+        return remainingMonth;
     }
     
-    public double returnMonthOne() {
-        return amountFirstMonth;
+    public double setRemainingMoney(){
+        return remainingMoney;
     }
-    
-    
-    
-    
-    
+     
 }
     
 //For each, print the amount payed that month, the amount payed so far, the remaining amount
 
-//multiply amount by rate, divide by number of months, output that amount, multi
+//multiply amount by rate, divide by number of months, output that amount, multiply remainder by rate, divide by number of months minus 1, repeat until month 1
