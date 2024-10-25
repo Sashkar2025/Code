@@ -30,17 +30,24 @@ public class Calculator {
         // Loop through each month to calculate payments
         for(int i = calculator.getMonths(); i > 0; i--) {
             double payment = calculator.calculatePayment();
-            System.out.println("\nPayment: " + currencyFormatter.format(payment));
-            System.out.println("Amount left: " + currencyFormatter.format(calculator.getRemainingMoney()));
-            System.out.println("Amount paid so far: " + currencyFormatter.format(calculator.getTotalPaid()) + "\n"); 
+            
+            if(calculator.getMonths() <= 0){
+            
+                System.out.println("\nPayment: " + currencyFormatter.format(payment));
+                System.out.println("Amount left: " + currencyFormatter.format(0));
+                System.out.println("Amount paid so far: " + currencyFormatter.format(calculator.getTotalPaid()) + "\n"); 
+            
+            }else{
+            
+                System.out.println("\nPayment: " + currencyFormatter.format(payment));
+                System.out.println("Amount left: " + currencyFormatter.format(calculator.getRemainingMoney()));
+                System.out.println("Amount paid so far: " + currencyFormatter.format(calculator.getTotalPaid()) + "\n"); 
+            
+            } 
         }
     }
 }
 
-/**
- * Class to calculate interest and payments based on the remaining money
- * and the number of months.
- */
 class InterestRateCalculator {
     public final double RATE = 0.1; // Interest rate of 10%
     private double remainingMoney; // Remaining money to be paid
@@ -78,4 +85,7 @@ class InterestRateCalculator {
         return totalPaid; 
     }
 }
+    
+//For each, print the amount payed that month, the amount payed so far, the remaining amount
 
+//multiply amount by rate, divide by number of months, output that amount, multiply remainder by rate, divide by number of months minus 1, repeat until month 1
