@@ -1,79 +1,81 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.calculator;
 import java.text.NumberFormat;
 import java.util.Scanner;
 import java.util.Locale;
 /**
- *
+ * 
  * @author sashkar2025
  */
 public class Calculator {
 
-   public static void main(String[] args) {
-       Scanner scan = new Scanner(System.in);
-       InterestRateCalculator calculator = new InterestRateCalculator();
-       NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
-       
-       System.out.println("What is the total amount of money?");
-       double dblMoney = scan.nextDouble();
-       
-       calculator.setMoney(dblMoney); //giving values to subclass
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        InterestRateCalculator calculator = new InterestRateCalculator();
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
+        
+        // Prompt user for total amount of money and months
+        System.out.println("What is the total amount of money?");
+        double dblMoney = scan.nextDouble(); 
+        
+        calculator.setMoney(dblMoney); // Set the total money in the calculator
 
-       System.out.println("How many months worth of interest?");
-       int intMonths = scan.nextInt();   
-       
-       calculator.setMonths(intMonths);
+        System.out.println("How many months worth of interest?");
+        int intMonths = scan.nextInt();
+        
+        calculator.setMonths(intMonths); // Set the number of months in the calculator
          
-       for(int i = calculator.getMonths(); i > 0; i--){
-           double payment = calculator.calculatePayment(); // Calculate payment for the month
-           System.out.println("\nPayment: " + currencyFormatter.format(payment));
-           System.out.println("Amount left: " + currencyFormatter.format(calculator.getRemainingMoney()));
-           System.out.println("Amount paid so far: " + currencyFormatter.format(calculator.getTotalPaid()) + "\n"); 
-       }
-   }
+        // Loop through each month to calculate payments
+        for(int i = calculator.getMonths(); i > 0; i--) {
+            double payment = calculator.calculatePayment();
+            System.out.println("\nPayment: " + currencyFormatter.format(payment));
+            System.out.println("Amount left: " + currencyFormatter.format(calculator.getRemainingMoney()));
+            System.out.println("Amount paid so far: " + currencyFormatter.format(calculator.getTotalPaid()) + "\n"); 
+        }
+    }
 }
 
+/**
+ * Class to calculate interest and payments based on the remaining money
+ * and the number of months.
+ */
 class InterestRateCalculator {
-    public final double RATE = 0.1;
-    private double remainingMoney;
-    private int remainingMonth;
-    private double totalPaid = 0;
+    public final double RATE = 0.1; // Interest rate of 10%
+    private double remainingMoney; // Remaining money to be paid
+    private int remainingMonth; // Months left to pay
+    private double totalPaid = 0; // Total amount paid so far
     
-    public void setMoney(double dblMoney) { //receiving input from main
-        remainingMoney = dblMoney;
+    // Methods to set the total amount of money and months
+    public void setMoney(double dblMoney) {
+        remainingMoney = dblMoney; 
     }   
           
-    public double getMoney() { //giving values to main class
-        return remainingMoney;   
-    }
-    
     public void setMonths(int intMonths) {
-        remainingMonth = intMonths;
+        remainingMonth = intMonths; 
     }
     
-    public int getMonths() {
-        return remainingMonth;
-    }
-   
+    // Method to calculate the payment for the current month
     public double calculatePayment() {
         double payment = (remainingMoney * RATE + remainingMoney) / remainingMonth;
-        remainingMoney -= payment; // Reduce remaining money by the payment
-        totalPaid += payment; // Update total paid
-        remainingMonth--; // Decrease remaining months
+        remainingMoney = remainingMoney - payment; 
+        totalPaid = totalPaid + payment; 
+        remainingMonth = remainingMonth - 1; 
         return payment;
     }
 
+    // Method to return months, remaining money, total paid
+    public int getMonths() {
+        return remainingMonth; 
+    }
+    
     public double getRemainingMoney(){
         return remainingMoney;
     }
 
     public double getTotalPaid() {
-        return totalPaid;
+        return totalPaid; 
     }
 }
-//For each, print the amount payed that month, the amount payed so far, the remaining amount
 
-//multiply amount by rate, divide by number of months, output that amount, multiply remainder by rate, divide by number of months minus 1, repeat until month 1
