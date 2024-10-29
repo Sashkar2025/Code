@@ -1,0 +1,103 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.constructors;
+import java.util.Scanner;
+/**
+ *
+ * @author sashkar2025
+ */
+public class Constructors {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        Course Constructors = new Course();
+        System.out.println("What is the course title?");
+        String course = scan.next();
+        Constructors.setCourseTitle(course);
+        
+        System.out.println("\nWhat is the course level?");
+        String level = scan.next();
+        Constructors.setCourseCode(level);
+        
+        System.out.println("\nWhat is the total points?");
+        int points = scan.nextInt();
+        Constructors.setTotalPoints(points);
+        
+        System.out.println("\nWhat is the instructor's name?");
+        String name = scan.next();
+        Constructors.setIntsructorName(name);
+        
+        System.out.println("\nCourse title: " + Constructors.getCourseTitle());
+        System.out.println("Course level: " + Constructors.getCourseCode());
+        System.out.println("Course point total: " + Constructors.getTotalPoints());
+        System.out.println("Course instructor's name: " + Constructors.getIntsructorName());
+        
+        
+        
+        Course Constructors2 = new Course(course, level, points, name);
+        System.out.println("What is the course title?");
+        
+        Constructors2.setCourseTitle(course);
+        
+    }      
+}
+
+class Course {
+    private String courseTitle;
+    private String courseCode;
+    private int pointsTotal;
+    private String instructorsName;
+   
+    public Course(){
+        courseTitle = null;
+        courseCode = null;
+        pointsTotal = 0;
+        instructorsName = null;    
+    }
+
+    public void Course(String course, String level, int points, String name) {
+        courseTitle = course; 
+        courseCode = level;
+        pointsTotal = points;
+        instructorsName = name;
+    } 
+    
+    public void Course(String course) {
+        courseTitle = course; 
+        courseCode = null;
+        pointsTotal = 0;
+        instructorsName = null;
+    } 
+
+    public void setCourseTitle(String course) {
+        courseTitle = course; 
+    }   
+    public String getCourseTitle(){
+        return courseTitle;
+    }
+
+    public void setCourseCode(String level) {
+        courseCode = level; 
+    }   
+    public String getCourseCode(){
+        return courseCode;
+    }
+    
+    public void setTotalPoints(int points) {
+        pointsTotal = points; 
+    }   
+    public int getTotalPoints(){
+        return pointsTotal;
+    }
+    
+    public void setIntsructorName(String name) {
+        instructorsName = name; 
+    }   
+    public String getIntsructorName(){
+        return instructorsName;
+    }
+}  
+    
