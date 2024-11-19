@@ -1,0 +1,122 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.mystore;
+
+/**
+ *
+ * @author jmacnab2025
+ */
+import java.util.Scanner;
+
+public class MyStore {
+    
+    // Constant for the MAX_BUDGET
+    private static final double MAX_BUDGET = 250.00;
+
+    public static void main(String[] args) {
+        // Create an array of Item objects
+        Item[] items = {
+            new Item("T Shirt", 29.99),
+            new Item("Shoes", 125.99),
+            new Item("Jeans", 60.99),
+            new Item("Jacket", 250.00),
+            new Item("Hat", 25.99),
+            new Item("Shorts", 75.99),
+            new Item("Blouse", 88.99)
+        };
+
+        // Initialize scanner for user input
+        Scanner scanner = new Scanner(System.in);
+        
+        // Variables to keep track of total cost and item count
+        double totalCost = 0;
+        int itemCount = 0;
+
+        while (true) {
+            // Ask user for item input
+            System.out.println("Enter an item name (or 'exit' to finish): ");
+            String input = scanner.nextLine().trim();
+
+            // If user types "exit", stop the loop
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            // Look for the item in the store
+            boolean itemFound = false;
+            for (Item item : items) {
+                if (item.getStrName().equalsIgnoreCase(input)) {
+                    itemFound = true;
+                    // Check if the user has enough budget to buy this item
+                    if (totalCost + item.getDblPrice() <= MAX_BUDGET) {
+                        totalCost += item.getDblPrice();
+                        itemCount++;
+                        System.out.println("Item added: " + item);
+                        System.out.println("Total count: " + itemCount + ", Total spent: $" + totalCost);
+                    } else {
+                        System.out.println("Warning: You have exceeded your budget with this item!");
+                    }
+                    break;
+                }
+            }
+
+            // If the item is not found, inform the user
+            if (!itemFound) {
+                System.out.println("Item not found, please try again.");
+            }
+
+            // If the user is over the budget, give them a warning
+            if (totalCost > MAX_BUDGET) {
+                System.out.println("You have exceeded your maximum budget of $" + MAX_BUDGET);
+                break;
+            }
+        }
+
+        // Close the scanner
+        scanner.close();
+
+        // Final message
+        System.out.println("Thank you for shopping! You bought " + itemCount + " items. Total spent: $" + totalCost);
+    }
+
+    // Item class to represent each item
+    static class Item {
+        private String strName;
+        private double dblPrice;
+
+        // Constructor to initialize Item
+        public Item(String strName, double dblPrice) {
+            this.strName = strName;
+            this.dblPrice = dblPrice;
+        }
+
+        // Getter for strName
+        public String getStrName() {
+            return strName;
+        }
+
+        // Setter for strName
+        public void setStrName(String strName) {
+            this.strName = strName;
+        }
+
+        // Getter for dblPrice
+        public double getDblPrice() {
+            return dblPrice;
+        }
+
+        // Setter for dblPrice
+        public void setDblPrice(double dblPrice) {
+            this.dblPrice = dblPrice;
+        }
+
+        // toString method to represent item as a string
+        @Override
+        public String toString() {
+            return "Item: " + strName + ", Price: " + dblPrice;
+        }
+    }
+}
+
