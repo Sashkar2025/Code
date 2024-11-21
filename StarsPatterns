@@ -1,9 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.starspatterns;
-
 /**
  *
  * @author sashkar2025
@@ -12,8 +10,8 @@ public class StarsPatterns {
     public static void main(String[] args) {
         // Pattern a: Descending Stars
         System.out.println("Pattern a: Descending Stars");
-        for (int i = 10; i >= 1; i--) {
-            for (int j = 0; j < i; j++) {
+        for (int i = 10; i >= 1; i = i - 1) {
+            for (int j = 0; j < i; j = j + 1) {
                 System.out.print("*");
             }
             System.out.println();
@@ -23,59 +21,59 @@ public class StarsPatterns {
 
         // Pattern b: Right-aligned increasing stars
         System.out.println("Pattern b: Right-aligned Increasing Stars");
-        for (int i = 1; i <= 10; i++) {
-            // Print leading spaces
-            for (int j = 0; j < 10 - i; j++) {
+        for (int i = 1; i <= 10; i = i + 1) {
+            // leading spaces
+            for (int j = 0; j < 10 - i; j = j + 1) {
                 System.out.print(" ");
             }
-            // Print stars
-            for (int j = 0; j < i; j++) {
+            // stars
+            for (int j = 0; j < i; j = j + 1) {
                 System.out.print("*");
             }
             System.out.println();
         }
 
-        System.out.println(); // Add a space between patterns
+        System.out.println(); 
 
         // Pattern c: Center-aligned decreasing stars
         System.out.println("Pattern c: Center-aligned Decreasing Stars");
-        for (int i = 10; i >= 1; i--) {
-            // Print leading spaces
-            for (int j = 0; j < 10 - i; j++) {
+        for (int i = 10; i >= 1; i = i - 1) {
+            
+            for (int j = 0; j < 10 - i; j = j + 1) {
                 System.out.print(" ");
             }
-            // Print stars
-            for (int j = 0; j < i; j++) {
+         
+            for (int j = 0; j < i; j = j + 1) {
                 System.out.print("*");
             }
             System.out.println();
         }
 
-        System.out.println(); // Add a space between patterns
+        System.out.println(); 
 
         // Pattern d: Diamond shape
         System.out.println("Pattern d: Diamond Shape");
         // Top part of the diamond (increasing)
-        for (int i = 1; i <= 5; i++) {
-            // Print leading spaces
-            for (int j = 0; j < 5 - i; j++) {
+        for (int i = 1; i <= 5; i = i + 1) {
+            
+            for (int j = 0; j < 5 - i; j = j + 1) {
                 System.out.print(" ");
             }
-            // Print stars
-            for (int j = 0; j < 2 * i - 1; j++) {
+           
+            for (int j = 0; j < 2 * i - 1; j = j + 1) {
                 System.out.print("*");
             }
             System.out.println();
         }
 
         // Bottom part of the diamond (decreasing)
-        for (int i = 4; i >= 1; i--) {
-            // Print leading spaces
-            for (int j = 0; j < 5 - i; j++) {
+        for (int i = 4; i >= 1; i = i - 1) {
+            
+            for (int j = 0; j < 5 - i; j = j + 1) {
                 System.out.print(" ");
             }
-            // Print stars
-            for (int j = 0; j < 2 * i - 1; j++) {
+            
+            for (int j = 0; j < 2 * i - 1; j = j + 1) {
                 System.out.print("*");
             }
             System.out.println();
