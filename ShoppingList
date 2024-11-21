@@ -1,0 +1,70 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+package com.mycompany.shoppinglist;
+/**
+ *
+ * @author sashkar2025
+ */
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ShoppingList {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // ArrayList to store the shopping items
+        ArrayList<String> shoppingList = new ArrayList<>();
+        
+        System.out.println("Enter shopping items, type 'done' when finished:");
+        
+        // Loop to take multiple inputs
+        while (true) {
+            System.out.print("Enter an item: ");
+            String item = scanner.nextLine();
+            
+            if (item.equalsIgnoreCase("done")) {
+                break;
+            }
+            
+            shoppingList.add(item);
+        }
+        
+        //initial shopping list
+        displayShoppingList(shoppingList);
+        
+        // Ask if the user wants to remove an item
+        System.out.print("Would you like to remove an item? (yes/no): ");
+        String removeResponse = scanner.nextLine();
+        
+        if (removeResponse.equalsIgnoreCase("yes")) {
+            System.out.print("Enter the name of the item to remove: ");
+            String itemName = scanner.nextLine();
+            
+            // Try to remove the item from the shopping list
+            if (shoppingList.contains(itemName)) {
+                shoppingList.remove(itemName);
+            } else {
+                System.out.println("Item not found in the list.");
+            }
+        }
+        
+        // Redisplay the updated shopping list
+        displayShoppingList(shoppingList);
+    }
+
+    // Method to display the shopping list with numbered items
+    public static void displayShoppingList(ArrayList<String> shoppingList) {
+        if (shoppingList.isEmpty()) {
+            System.out.println("The shopping list is empty.");
+        } else {
+            System.out.println("\nShopping List:");
+            for (int i = 0; i < shoppingList.size(); i = i + 1) {
+                System.out.println((i + 1) + ". " + shoppingList.get(i));
+            }
+        }
+    }
+}
+
+
