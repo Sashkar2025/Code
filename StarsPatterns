@@ -10,8 +10,8 @@ public class StarsPatterns {
     public static void main(String[] args) {
         // Pattern a: Descending Stars
         System.out.println("Pattern a: Descending Stars");
-        for (int i = 10; i >= 1; i = i - 1) {
-            for (int j = 0; j < i; j = j + 1) {
+        for (int i = 10; i >= 1; i--) {
+            for (int star = 0; star < i; star++) {
                 System.out.print("*");
             }
             System.out.println();
@@ -21,13 +21,13 @@ public class StarsPatterns {
 
         // Pattern b: Right-aligned increasing stars
         System.out.println("Pattern b: Right-aligned Increasing Stars");
-        for (int i = 1; i <= 10; i = i + 1) {
+        for (int i = 1; i <= 10; i++) {
             // leading spaces
-            for (int j = 0; j < 10 - i; j = j + 1) {
+            for (int star = 0; star < 10 - i; star++) {
                 System.out.print(" ");
             }
             // stars
-            for (int j = 0; j < i; j = j + 1) {
+            for (int star = 0; star < i; star++) {
                 System.out.print("*");
             }
             System.out.println();
@@ -37,13 +37,13 @@ public class StarsPatterns {
 
         // Pattern c: Center-aligned decreasing stars
         System.out.println("Pattern c: Center-aligned Decreasing Stars");
-        for (int i = 10; i >= 1; i = i - 1) {
+        for (int i = 10; i >= 1; i--) {
             
-            for (int j = 0; j < 10 - i; j = j + 1) {
+            for (int star = 0; star < 10 - i; star++) {
                 System.out.print(" ");
             }
          
-            for (int j = 0; j < i; j = j + 1) {
+            for (int star = 0; star < i; star++) {
                 System.out.print("*");
             }
             System.out.println();
@@ -54,30 +54,29 @@ public class StarsPatterns {
         // Pattern d: Diamond shape
         System.out.println("Pattern d: Diamond Shape");
         // Top part of the diamond (increasing)
-        for (int i = 1; i <= 5; i = i + 1) {
+        for (int i = 1; i <= 5; i++) {
             
-            for (int j = 0; j < 5 - i; j = j + 1) {
+            for (int star = 0; star < 5 - i; star++) {
                 System.out.print(" ");
             }
            
-            for (int j = 0; j < 2 * i - 1; j = j + 1) {
+            for (int star = 0; star < 2 * i - 1; star++) {
                 System.out.print("*");
             }
             System.out.println();
         }
 
         // Bottom part of the diamond (decreasing)
-        for (int i = 4; i >= 1; i = i - 1) {
+        for (int i = 5; i >= 1; i = i - 1) {
             
-            for (int j = 0; j < 5 - i; j = j + 1) {
+            for (int star = 0; star < 5 - i; star++) {
                 System.out.print(" ");
             }
             
-            for (int j = 0; j < 2 * i - 1; j = j + 1) {
+            for (int star = 0; star < 2 * i - 1; star++) {
                 System.out.print("*");
             }
             System.out.println();
         }
     }
 }
-
