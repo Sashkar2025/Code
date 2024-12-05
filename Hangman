@@ -1,0 +1,166 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+package com.mycompany.hangman;
+/**
+ *
+ * @author sashkar2025
+ */
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Hangman {
+
+    public static void main(String[] args) {
+        
+        // List of words
+        List<String> wordList = Arrays.asList("apple", "banana", "computer", "developer", "elephant", "flower", "guitar", "harmony", "infinite", "jungle",
+        "keyboard", "language", "mountain", "nature", "orange", "programming", "quality", "river", "sunshine", "technology",
+        "umbrella", "vaccine", "weather", "xenon", "yellow", "zebra", "algorithm", "binary", "cloud", "data", "engineer",
+        "framework", "html", "javascript", "knowledge", "logic", "machine", "network", "object", "python", "query",
+        "react", "software", "test", "variable", "web", "xml", "azure", "backend", "cloud", "debug", "error", "function",
+        "git", "host", "interface", "java", "kernel", "lambda", "method", "node", "optimization", "project", "query", "runtime",
+        "schema", "syntax", "thread", "user", "version", "websocket", "xml", "yaml", "algorithmic", "application", "bug", 
+        "binary", "client", "container", "dependency", "driver", "element", "event", "fetch", "framework", "hashmap", 
+        "immutable", "input", "integration", "interface", "iteration", "library", "localhost", "machinelearning", "matrix",
+        "model", "nodejs", "output", "platform", "port", "protocol", "query", "rate", "repository", "resource", 
+        "router", "security", "server", "session", "socket", "stack", "system", "thread", "token", "transaction", 
+        "update", "validation", "view", "virtual", "webapi", "website", "widget", "access", "activation", "actor", 
+        "add", "adjust", "alternative", "array", "associate", "attribute", "base", "bind", "block", "boundary", "branch",
+        "call", "clone", "commit", "configuration", "constructor", "consume", "dataframe", "define", "delete", "deployment",
+        "dialog", "directory", "disconnect", "document", "docker", "encryption", "environment", "exception", "export", 
+        "extend", "file", "filter", "final", "functionality", "global", "group", "handle", "hash", "header", "identifier",
+        "initialize", "inject", "interface", "interval", "invoke", "join", "label", "listener", "log", "map", 
+        "merge", "methodology", "modification", "module", "namespace", "node", "notify", "parse", "path", "plugin", 
+        "poll", "post", "prefix", "querystring", "read", "recurse", "refactor", "reject", "release", "rename", "reset",
+        "resource", "restore", "return", "sanitize", "save", "schedule", "search", "select", "serialize", "service", 
+        "session", "set", "signal", "slice", "sort", "state", "store", "submit", "synchronize", "test", "timeout", 
+        "tokenize", "trace", "transform", "unittest", "validate", "view", "visualize", "wait", "watch", "window", 
+        "wrapper", "yield", "zip", "abstract", "agency", "aircraft", "aluminum", "anchor", "appeal", "applause", "arc", "articulate", "astronomy",
+        "barrier", "baseball", "billion", "binary", "bison", "blessing", "bomb", "brief", "brilliant", "calculation",
+        "cactus", "cargo", "chamber", "chocolate", "clarity", "climate", "climb", "colony", "comet", "competence",
+        "comply", "comprehensive", "concept", "content", "contest", "contract", "crystal", "custom", "curiosity", "cycle",
+        "decent", "decoder", "defense", "depend", "desire", "dialogue", "diet", "diminish", "distant", "distinguish",
+        "eclipse", "editor", "efficiency", "elevate", "endurance", "entity", "essence", "execute", "factor", "feedback",
+        "finite", "flaw", "fortune", "frequency", "galaxy", "generate", "gospel", "guitar", "habit", "harmony",
+        "heir", "hexagon", "horizon", "impact", "input", "integrity", "interact", "invest", "isolation", "journey",
+        "keen", "kingdom", "knot", "latitude", "laughter", "legacy", "limit", "luminous", "machine", "momentum",
+        "motion", "motive", "nucleus", "network", "novel", "objective", "operation", "optimistic", "outcome", "output",
+        "paradigm", "pixel", "platform", "potential", "prism", "pulse", "quantum", "radius", "reform", "reliable",
+        "resource", "reunion", "revolution", "sample", "scalable", "secure", "sequence", "simulation", "skeptic", "sociology",
+        "solution", "static", "stealth", "strive", "structure", "subtle", "success", "synthesis", "temporal", "theory",
+        "thrive", "together", "total", "track", "transform", "unity", "utility", "validate", "value", "vector",
+        "velocity", "vessel", "vibration", "virtual", "vivid", "vocal", "voltage", "vulnerability", "wonder", "workload",
+        "accommodation", "admission", "allegory", "apology", "assistance", "audible", "aesthetic", "belief", "council",
+        "crave", "doubt", "edify", "enlighten", "enthusiasm", "equilibrium", "ethics", "expand", "explore", "faculty",
+        "flourish", "grip", "guide", "horizon", "impose", "innovation", "journey", "magnitude", "manipulate", "noble",
+        "origin", "outlook", "particular", "precise", "redefine", "reflection", "sacrifice", "sensitive", "stability",
+        "structure", "sustain", "transform", "unveil", "visionary", "vivid", "zeal", "zephyr", "adventure", "appeal",
+        "embrace", "balance", "clarify", "decode", "flair", "grace", "illusion", "increase", "integrate", "magnitude",
+        "nurture", "perspective", "potential", "resolve", "strengthen", "testament", "visualize", "reclaim", "spark",
+        "journey", "unfold", "genuine", "shine", "synergy", "empower", "endurance", "highlight", "ignite", "beacon",
+        "legacy", "harvest", "fluent", "charm", "desire", "reflect", "recapture", "cultivate", "focus", "belief",
+        "transcend", "legacy", "harvest", "hope", "clarify", "enlighten", "strategize", "influence", "light", "root",
+        "rejuvenate", "focus", "inspire", "honor", "speak", "elevate", "cherish", "develop", "empower", "prosper",
+        "redefine", "assert", "thrive", "genuine", "courage", "harmony");
+        
+        // Select a random word from the list
+        Random random = new Random();
+        String word = wordList.get(random.nextInt(wordList.size())).toLowerCase(); // put the word in lowercase
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Welcome to Hangman!");
+        System.out.println("A random word has been selected. Start guessing!");
+        
+        int maxAttempts = 6; // Max number of attempts
+        ArrayList<Character> guessedLetters = new ArrayList<>(); // store guessed letters
+        StringBuilder hiddenWord = new StringBuilder();
+
+        // Build the hidden word with underscores
+        for (int i = 0; i < word.length(); i++) {
+            hiddenWord.append("_");
+        }
+
+        // Start the game
+        int attempts = 0;
+        boolean wordGuessed = false;
+
+        while (attempts < maxAttempts && !wordGuessed) {
+            System.out.println("\nCurrent Word: " + hiddenWord);
+            System.out.println("Guessed letters: " + guessedLetters);
+            System.out.println("Attempts left: " + (maxAttempts - attempts));
+            System.out.println("Please guess a letter: ");
+            String input = scanner.nextLine().toLowerCase(); // Get user input and convert to lowercase
+            
+            // ensure only a single letter is entered
+            if (input.length() != 1 || !Character.isLetter(input.charAt(0))) {
+                System.out.println("Invalid input. Please enter a single letter.");
+                continue;
+            }
+
+            char guess = input.charAt(0); // Extract the letter from the input
+
+            // Check if the letter has already been guessed
+            if (guessedLetters.contains(guess)) {
+                System.out.println("You've already guessed that letter.");
+                continue;
+            }
+
+            // Add the guess to the list of guessed letters
+            guessedLetters.add(guess);
+
+            // Check if the guessed letter is in the word
+            if (word.contains(String.valueOf(guess))) {
+                System.out.println("Good guess!");
+
+                // Reveal the guessed letter in the hidden word
+                for (int i = 0; i < word.length(); i++) {
+                    if (word.charAt(i) == guess) {
+                        hiddenWord.setCharAt(i, guess); // Update the hidden word
+                    }
+                }
+            } else {
+                System.out.println("Wrong guess!");
+                attempts++; // Increase the number of wrong attempts
+            }
+
+            // Display the current hangman figure
+            drawHangman(attempts);
+
+            // Check if the word has been completely guessed
+            if (hiddenWord.toString().equals(word)) {
+                wordGuessed = true;
+            }
+        }
+
+        // Game end logic
+        if (wordGuessed) {
+            System.out.println("\nCongratulations! You've guessed the word: " + word);
+        } else {
+            System.out.println("\nGame over! The word was: " + word);
+            drawHangman(attempts); // Show the hangman figure
+        }
+
+        scanner.close();
+    }
+
+    // Method to draw the hangman figure based on number of incorrect attempts
+    public static void drawHangman(int attempts) {
+        System.out.println("Hangman Status: ");
+        switch (attempts) {
+            case 0 -> System.out.println("  -----\n  |   |\n      |\n      |\n      |\n      |\n=========");
+            case 1 -> System.out.println("  -----\n  |   |\n  O   |\n      |\n      |\n      |\n=========");
+            case 2 -> System.out.println("  -----\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========");
+            case 3 -> System.out.println("  -----\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========");
+            case 4 -> System.out.println("  -----\n  |   |\n  O   |\n /|\\  |\n      |\n      |\n=========");
+            case 5 -> System.out.println("  -----\n  |   |\n  O   |\n /|\\  |\n /    |\n      |\n=========");
+            case 6 -> System.out.println("  -----\n  |   |\n  O   |\n /|\\  |\n / \\  |\n      |\n=========");
+            default -> System.out.println("Invalid attempts count.");
+        }
+    }
+}
+
