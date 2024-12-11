@@ -6,24 +6,20 @@ package com.mycompany.hangman;
  *
  * @author sashkar2025
  */
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Hangman {
 
     public static void main(String[] args) {
         
         // List of words
-        List<String> wordList = Arrays.asList("apple", "banana", "computer", "developer", "elephant", "flower", "guitar", "harmony", "infinite", "jungle",
+        List<String> wordList = Arrays.asList("awful", "antelope", "acorn", "apple", "banana", "computer", "developer", "elephant", "flower", "guitar", "harmony", "infinite", "jungle",
         "keyboard", "language", "mountain", "nature", "orange", "programming", "quality", "river", "sunshine", "technology",
         "umbrella", "vaccine", "weather", "xenon", "yellow", "zebra", "algorithm", "binary", "cloud", "data", "engineer",
         "framework", "html", "javascript", "knowledge", "logic", "machine", "network", "object", "python", "query",
-        "react", "software", "test", "variable", "web", "xml", "azure", "backend", "cloud", "debug", "error", "function",
+        "react", "software", "test", "variable", "web", "azure", "backend", "cloud", "debug", "error", "function",
         "git", "host", "interface", "java", "kernel", "lambda", "method", "node", "optimization", "project", "query", "runtime",
-        "schema", "syntax", "thread", "user", "version", "websocket", "xml", "yaml", "algorithmic", "application", "bug", 
+        "schema", "syntax", "thread", "user", "version", "websocket", "algorithmic", "application", "bug", 
         "binary", "client", "container", "dependency", "driver", "element", "event", "fetch", "framework", "hashmap", 
         "immutable", "input", "integration", "interface", "iteration", "library", "localhost", "machinelearning", "matrix",
         "model", "nodejs", "output", "platform", "port", "protocol", "query", "rate", "repository", "resource", 
@@ -34,8 +30,8 @@ public class Hangman {
         "dialog", "directory", "disconnect", "document", "docker", "encryption", "environment", "exception", "export", 
         "extend", "file", "filter", "final", "functionality", "global", "group", "handle", "hash", "header", "identifier",
         "initialize", "inject", "interface", "interval", "invoke", "join", "label", "listener", "log", "map", 
-        "merge", "methodology", "modification", "module", "namespace", "node", "notify", "parse", "path", "plugin", 
-        "poll", "post", "prefix", "querystring", "read", "recurse", "refactor", "reject", "release", "rename", "reset",
+        "merge", "methodology", "modification", "module", "namespace", "node", "notify", "parse", "path", 
+        "poll", "post", "prefix", "read", "recurse", "refactor", "reject", "release", "rename", "reset",
         "resource", "restore", "return", "sanitize", "save", "schedule", "search", "select", "serialize", "service", 
         "session", "set", "signal", "slice", "sort", "state", "store", "submit", "synchronize", "test", "timeout", 
         "tokenize", "trace", "transform", "unittest", "validate", "view", "visualize", "wait", "watch", "window", 
@@ -69,12 +65,12 @@ public class Hangman {
         
         // Select a random word from the list
         Random random = new Random();
-        String word = wordList.get(random.nextInt(wordList.size())).toLowerCase(); // put the word in lowercase
+        String word = wordList.get(random.nextInt(wordList.size()));
         
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("Welcome to Hangman!");
-        System.out.println("A random word has been selected. Start guessing!");
+        System.out.println("Welcome to Sam's Java Hangman.");
+        System.out.println("A random word has been selected. Start guessing.");
         
         int maxAttempts = 6; // Max number of attempts
         ArrayList<Character> guessedLetters = new ArrayList<>(); // store guessed letters
@@ -120,7 +116,7 @@ public class Hangman {
                 // Reveal the guessed letter in the hidden word
                 for (int i = 0; i < word.length(); i++) {
                     if (word.charAt(i) == guess) {
-                        hiddenWord.setCharAt(i, guess); // Update the hidden word
+                        hiddenWord.setCharAt(i, guess);
                     }
                 }
             } else {
@@ -144,8 +140,6 @@ public class Hangman {
             System.out.println("\nGame over! The word was: " + word);
             drawHangman(attempts); // Show the hangman figure
         }
-
-        scanner.close();
     }
 
     // Method to draw the hangman figure based on number of incorrect attempts
@@ -159,7 +153,6 @@ public class Hangman {
             case 4 -> System.out.println("  -----\n  |   |\n  O   |\n /|\\  |\n      |\n      |\n=========");
             case 5 -> System.out.println("  -----\n  |   |\n  O   |\n /|\\  |\n /    |\n      |\n=========");
             case 6 -> System.out.println("  -----\n  |   |\n  O   |\n /|\\  |\n / \\  |\n      |\n=========");
-            default -> System.out.println("Invalid attempts count.");
         }
     }
 }
