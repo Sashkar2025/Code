@@ -1,0 +1,83 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+package com.mycompany.unit4test;
+
+import java.util.Random; 
+import java.util.ArrayList; 
+
+/**
+ *
+ * @author Sashkar2025
+ */
+
+class Card {
+   
+    private final String suit;
+    private final int faceValue;
+
+    // Constructor to create a card with a suit and face value
+    public Card(String suit, int faceValue) {
+        this.suit = suit;
+        this.faceValue = faceValue;
+    }
+
+    // Getters
+    public String getSuit() {
+        return this.suit;
+    }
+
+    public int getFaceValue() {
+        return this.faceValue;
+    }
+
+    //Display the card's details
+    public void displayCard() {
+        System.out.println("Card: " + this.faceValue + " of " + this.suit);
+    }
+}
+
+// Main program class to run the card game logic
+public class Unit4Test {
+    public static void main(String[] args) {
+        // Create a deck of cards
+        ArrayList<Card> deck = new ArrayList<Card>();
+        String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+        
+        // Populate the deck (1-13 cards for each suit)
+        for (String suit : suits) {
+            for (int i = 1; i <= 13; i++) {
+                deck.add(new Card(suit, i));
+            }
+        }
+
+        Card[] hand = new Card[5];
+    
+        Random rand = new Random();
+        
+        // Loop to deal 5 distinct random cards from the deck
+        for (int i = 0; i < 5; i++) {
+           
+            int index = rand.nextInt(deck.size());
+
+            // Remove the card from the deck and add it to the hand
+            hand[i] = deck.remove(index);
+        }
+
+        //Track the highest card and its index
+        Card highestCard = hand[0];
+        int highestIndex = 0;
+
+        for (int i = 0; i < hand.length; i++) {
+            hand[i].displayCard();
+
+            // Check if the current card is higher than the previous highest
+            if (hand[i].getFaceValue() > highestCard.getFaceValue()) {
+                highestCard = hand[i];
+                highestIndex = i;
+            }
+        }
+
+        System.out.println("\nHighest card: " + highestCard.getFaceValue() + " of " + highestCard.getSuit());
+    }
+}
