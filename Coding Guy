@@ -23,31 +23,56 @@ public class ImageRenderer {
         Graphics2D g2d = image.createGraphics();
 
         // Background color
-        g2d.setColor(new Color(200, 200, 255));
+        g2d.setColor(new Color(210, 220, 255));
         g2d.fillRect(0, 0, width, height);
 
-        // Face
+        // Face details
         g2d.setColor(new Color(255, 224, 189));
-        g2d.fillOval(200, 200, 400, 400);
+        g2d.fillOval(200, 200, 400, 400); // Face shape
 
-        // Eyes
+        // Hair
+        g2d.setColor(new Color(50, 25, 0));
+        g2d.fillArc(200, 150, 400, 250, 0, 180); // Top hair
+
+        // Eyes (white part)
         g2d.setColor(Color.WHITE);
-        g2d.fillOval(300, 300, 80, 80);
-        g2d.fillOval(420, 300, 80, 80);
+        g2d.fillOval(300, 300, 80, 50);
+        g2d.fillOval(420, 300, 80, 50);
 
+        // Pupils
         g2d.setColor(Color.BLACK);
-        g2d.fillOval(330, 330, 30, 30);
-        g2d.fillOval(450, 330, 30, 30);
+        g2d.fillOval(330, 320, 30, 30);
+        g2d.fillOval(450, 320, 30, 30);
+
+        // Eyebrows
+        g2d.setColor(new Color(50, 25, 0));
+        g2d.fillRect(290, 280, 100, 10);
+        g2d.fillRect(410, 280, 100, 10);
+
+        // Nose
+        g2d.setColor(new Color(200, 170, 140));
+        g2d.fillPolygon(new int[]{390, 410, 400}, new int[]{360, 360, 400}, 3);
 
         // Mouth
         g2d.setColor(Color.RED);
-        g2d.fillArc(320, 420, 160, 80, 0, -180);
+        g2d.fillArc(340, 420, 120, 60, 0, -180);
+
+        // Teeth
+        g2d.setColor(Color.WHITE);
+        g2d.drawLine(340, 450, 460, 450);
+        g2d.drawLine(370, 420, 370, 450);
+        g2d.drawLine(400, 420, 400, 450);
+        g2d.drawLine(430, 420, 430, 450);
 
         // Glasses
         g2d.setColor(Color.BLACK);
-        g2d.drawRect(290, 290, 100, 100);
-        g2d.drawRect(410, 290, 100, 100);
-        g2d.drawLine(390, 340, 410, 340);
+        g2d.drawRect(290, 290, 100, 60);
+        g2d.drawRect(410, 290, 100, 60);
+        g2d.drawLine(390, 320, 410, 320);
+
+        // Beard
+        g2d.setColor(new Color(50, 25, 0));
+        g2d.fillArc(250, 400, 300, 150, 0, -180);
 
         g2d.dispose();
         return image;
