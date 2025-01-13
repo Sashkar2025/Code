@@ -22,57 +22,70 @@ public class ImageRenderer {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = image.createGraphics();
 
-        // Background color
-        g2d.setColor(new Color(210, 220, 255));
+        // Enable anti-aliasing for smoother rendering
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Background color with gradient
+        GradientPaint backgroundGradient = new GradientPaint(0, 0, new Color(210, 220, 255), 0, height, new Color(180, 200, 240));
+        g2d.setPaint(backgroundGradient);
         g2d.fillRect(0, 0, width, height);
 
         // Face details
         g2d.setColor(new Color(255, 224, 189));
         g2d.fillOval(200, 200, 400, 400); // Face shape
 
-        // Hair
+        // Hair with shading
         g2d.setColor(new Color(50, 25, 0));
         g2d.fillArc(200, 150, 400, 250, 0, 180); // Top hair
+        g2d.setColor(new Color(30, 15, 0));
+        g2d.drawArc(200, 150, 400, 250, 0, 180); // Hair outline
 
         // Eyes (white part)
         g2d.setColor(Color.WHITE);
         g2d.fillOval(300, 300, 80, 50);
         g2d.fillOval(420, 300, 80, 50);
 
-        // Pupils
+        // Pupils with highlight
         g2d.setColor(Color.BLACK);
         g2d.fillOval(330, 320, 30, 30);
         g2d.fillOval(450, 320, 30, 30);
+        g2d.setColor(Color.WHITE);
+        g2d.fillOval(340, 330, 10, 10);
+        g2d.fillOval(460, 330, 10, 10);
 
-        // Eyebrows
+        // Eyebrows with detail
         g2d.setColor(new Color(50, 25, 0));
         g2d.fillRect(290, 280, 100, 10);
         g2d.fillRect(410, 280, 100, 10);
 
-        // Nose
+        // Nose with shading
         g2d.setColor(new Color(200, 170, 140));
         g2d.fillPolygon(new int[]{390, 410, 400}, new int[]{360, 360, 400}, 3);
+        g2d.setColor(new Color(180, 150, 120));
+        g2d.drawPolygon(new int[]{390, 410, 400}, new int[]{360, 360, 400}, 3);
 
-        // Mouth
+        // Mouth with shading and teeth
         g2d.setColor(Color.RED);
         g2d.fillArc(340, 420, 120, 60, 0, -180);
-
-        // Teeth
         g2d.setColor(Color.WHITE);
         g2d.drawLine(340, 450, 460, 450);
         g2d.drawLine(370, 420, 370, 450);
         g2d.drawLine(400, 420, 400, 450);
         g2d.drawLine(430, 420, 430, 450);
 
-        // Glasses
+        // Glasses with gradient
         g2d.setColor(Color.BLACK);
         g2d.drawRect(290, 290, 100, 60);
         g2d.drawRect(410, 290, 100, 60);
         g2d.drawLine(390, 320, 410, 320);
 
-        // Beard
+        // Beard with texture
         g2d.setColor(new Color(50, 25, 0));
         g2d.fillArc(250, 400, 300, 150, 0, -180);
+        g2d.setColor(new Color(30, 15, 0));
+        for (int i = 250; i < 550; i += 10) {
+            g2d.drawLine(i, 450, i + 20, 500);
+        }
 
         g2d.dispose();
         return image;
