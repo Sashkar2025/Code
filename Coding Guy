@@ -1,0 +1,71 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+public class ImageRenderer {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Image Viewer");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(800, 800);
+
+            BufferedImage image = createImage();
+            frame.add(new ImagePanel(image));
+
+            frame.setVisible(true);
+        });
+    }
+
+    private static BufferedImage createImage() {
+        int width = 800;
+        int height = 800;
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = image.createGraphics();
+
+        // Background color
+        g2d.setColor(new Color(200, 200, 255));
+        g2d.fillRect(0, 0, width, height);
+
+        // Face
+        g2d.setColor(new Color(255, 224, 189));
+        g2d.fillOval(200, 200, 400, 400);
+
+        // Eyes
+        g2d.setColor(Color.WHITE);
+        g2d.fillOval(300, 300, 80, 80);
+        g2d.fillOval(420, 300, 80, 80);
+
+        g2d.setColor(Color.BLACK);
+        g2d.fillOval(330, 330, 30, 30);
+        g2d.fillOval(450, 330, 30, 30);
+
+        // Mouth
+        g2d.setColor(Color.RED);
+        g2d.fillArc(320, 420, 160, 80, 0, -180);
+
+        // Glasses
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(290, 290, 100, 100);
+        g2d.drawRect(410, 290, 100, 100);
+        g2d.drawLine(390, 340, 410, 340);
+
+        g2d.dispose();
+        return image;
+    }
+}
+
+class ImagePanel extends JPanel {
+    private BufferedImage image;
+
+    public ImagePanel(BufferedImage image) {
+        this.image = image;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (image != null) {
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        }
+    }
+}
