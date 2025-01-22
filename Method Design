@@ -1,0 +1,123 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.methoddesign;
+
+/**
+ *
+ * @author sashkar2025
+ */
+import java.util.Scanner;
+
+public class MethodDesign {
+
+    // Course class
+    static class Course {
+        private String courseName;
+        private int testScore;
+
+        public Course(String name) {
+            courseName = name;
+            testScore = 0; // Default score
+        }
+
+        // Set and get the test score
+        public void setTestScore(int score) {
+            this.testScore = score;
+        }
+
+        public int getTestScore() {
+            return this.testScore;
+        }
+
+        // Return course name and test score
+        @Override
+        public String toString() {
+            return courseName + ": " + testScore;
+        }
+    }
+
+    static class Student {
+        private String firstName, lastName;
+        private Course[] courses;
+
+        // Default constructor
+        public Student() {
+            firstName = "";
+            lastName = "";
+            courses = new Course[3]; // Three courses per student
+            for (int i = 0; i < courses.length; i++) {
+                courses[i] = new Course("Course " + (i + 1)); // Default course names
+            }
+        }
+
+        // Overloaded constructor
+        public Student(String first, String last) {
+            firstName = first;
+            lastName = last;
+            courses = new Course[3];
+            for (int i = 0; i < courses.length; i++) {
+                courses[i] = new Course("Course " + (i + 1)); // Default course names
+            }
+        }
+
+        // Set and get the test score
+        public void setTestScore(int courseIndex, int score) {
+            if (courseIndex >= 0 && courseIndex < courses.length) {
+                courses[courseIndex].setTestScore(score);
+            }
+        }
+
+        public int getTestScore(int courseIndex) {
+            if (courseIndex >= 0 && courseIndex < courses.length) {
+                return courses[courseIndex].getTestScore();
+            }
+            return -1; // Invalid course index
+        }
+
+        // average test score
+        public double getAverage() {
+            double total = 0;
+            for (Course course : courses) {
+                total += course.getTestScore();
+            }
+            return total / courses.length;
+        }
+
+        // Return student details including the course scores
+        @Override
+        public String toString() {
+            String result = firstName + " " + lastName + "\n";
+            for (Course course : courses) {
+                result += course.toString() + "\n";
+            }
+            return result;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // User input for student's name
+        System.out.println("Enter student first name: ");
+        String firstName = sc.nextLine();
+
+        System.out.println("Enter student last name: ");
+        String lastName = sc.nextLine();
+
+        Student student = new Student(firstName, lastName);
+
+        // Input and set test scores for each course
+        for (int i = 0; i < 3; i++) {
+            System.out.println("Enter score for " + "Course " + (i + 1) + ": ");
+            int score = sc.nextInt();
+            student.setTestScore(i, score);
+        }
+
+        // Display student details and average score
+        System.out.println("\nStudent Details:");
+        System.out.println(student.toString());
+        System.out.println("Average score: " + student.getAverage());
+    }
+}
