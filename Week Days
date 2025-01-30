@@ -1,0 +1,58 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.weekdays;
+
+/**
+ *
+ * @author sashkar2025
+ */
+
+import java.util.*;
+
+public class WeekDays {
+    public static void main(String[] args) {
+        // Initialize array with all 7 days of the week
+        String[] weekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        
+        //Print all 7 days of the week in order
+        System.out.println("All days of the week:");
+        for (String day : weekDays) {
+            System.out.println(day);
+        }
+        
+        // Resize array to only include weekdays
+        // Create a list and copy only weekdays to the new array
+        String[] weekdays = new String[5];
+        System.arraycopy(weekDays, 0, weekdays, 0, 5); 
+        
+        System.out.println("\nWeekdays only:");
+        for (String day : weekdays) {
+            System.out.println(day);
+        }
+
+        //Bonus: Shuffle all 7 days
+        shuffleArray(weekDays);
+
+        System.out.println("\nShuffled days of the week:");
+        for (String day : weekDays) {
+            System.out.println(day);
+        }
+    }
+
+    // Method to shuffle the array of days
+    public static void shuffleArray(String[] array) {
+        // Convert array to List for shuffling
+        List<String> list = new ArrayList<>();
+        Collections.addAll(list, array);
+
+        // Shuffle the list
+        Collections.shuffle(list);
+
+        // Copy the shuffled list back into the array
+        for (int i = 0; i < array.length; i++) {
+            array[i] = list.get(i);
+        }
+    }
+}
