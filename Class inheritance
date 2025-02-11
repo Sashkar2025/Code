@@ -1,0 +1,331 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.classinheritance;
+
+/**
+ *
+ * @author sashkar2025
+ */
+
+// Base class Vehicle
+public class ClassInheritance {
+
+    // Base class Vehicle
+    static class Vehicle {
+        private final String brand;
+        private final double speed; // speed in mph
+        private final int passengers;
+        private final double price;
+
+        // Constructor for Vehicle
+        public Vehicle(String brand, double speed, int passengers, double price) {
+            this.brand = brand;
+            this.speed = speed;
+            this.passengers = passengers;
+            this.price = price;
+        }
+
+        // Getter methods
+        public String getBrand() {
+            return brand;
+        }
+
+        public double getSpeed() {
+            return speed;
+        }
+
+        public int getPassengers() {
+            return passengers;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        // Speedometer method to display current speed
+        public void speedometer() {
+            System.out.println("Current speed: " + speed + " mph");
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Brand: %s\nSpeed: %.2f mph\nPassengers: %d\nPrice: %.2f lbs", brand, speed, passengers, price);
+        }
+    }
+
+    // Car class inherits from Vehicle
+    static class Car extends Vehicle {
+        private final double mpg;
+
+        // Constructor for Car
+        public Car(String brand, double speed, int passengers, double price, double mpg) {
+            super(brand, speed, passengers, price);
+            this.mpg = mpg;
+        }
+
+        // Getter for MPG
+        public double getMPG() {
+            return mpg;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nMPG: %.2f", mpg);
+        }
+    }
+
+    // Subclass of Car: Electric Car
+    static class ElectricCar extends Car {
+        private final int batteryCapacity; // in kWh
+
+        // Constructor for ElectricCar
+        public ElectricCar(String brand, double speed, int passengers, double price, double mpg, int batteryCapacity) {
+            super(brand, speed, passengers, price, mpg);
+            this.batteryCapacity = batteryCapacity;
+        }
+
+        // Getter for battery capacity
+        public int getBatteryCapacity() {
+            return batteryCapacity;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nBattery Capacity: %d kWh", batteryCapacity);
+        }
+    }
+
+    // Subclass of Car: Sports Car
+    static class SportsCar extends Car {
+        private final double topSpeed; // top speed in mph
+
+        // Constructor for SportsCar
+        public SportsCar(String brand, double speed, int passengers, double price, double mpg, double topSpeed) {
+            super(brand, speed, passengers, price, mpg);
+            this.topSpeed = topSpeed;
+        }
+
+        // Getter for top speed
+        public double getTopSpeed() {
+            return topSpeed;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nTop Speed: %.2f mph", topSpeed);
+        }
+    }
+
+    // Boat class inherits from Vehicle
+    static class Boat extends Vehicle {
+        private final String type; // type of boat (e.g., yacht, speedboat)
+
+        // Constructor for Boat
+        public Boat(String brand, double speed, int passengers, double price, String type) {
+            super(brand, speed, passengers, price);
+            this.type = type;
+        }
+
+        // Getter for type of boat
+        public String getType() {
+            return type;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nBoat Type: %s", type);
+        }
+    }
+
+    // Subclass of Boat: Speedboat
+    static class Speedboat extends Boat {
+        private final double enginePower; // engine power in HP
+
+        // Constructor for Speedboat
+        public Speedboat(String brand, double speed, int passengers, double price, String type, double enginePower) {
+            super(brand, speed, passengers, price, type);
+            this.enginePower = enginePower;
+        }
+
+        // Getter for engine power
+        public double getEnginePower() {
+            return enginePower;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nEngine Power: %.2f HP", enginePower);
+        }
+    }
+
+    // Subclass of Boat: Yacht
+    static class Yacht extends Boat {
+        private final int rooms;
+
+        // Constructor for Yacht
+        public Yacht(String brand, double speed, int passengers, double price, String type, int rooms) {
+            super(brand, speed, passengers, price, type);
+            this.rooms = rooms;
+        }
+
+        // Getter for rooms
+        public int getRooms() {
+            return rooms;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nNumber of Rooms: %d", rooms);
+        }
+    }
+
+    // Airplane class inherits from Vehicle
+    static class Airplane extends Vehicle {
+        private final double wingspan; // in feet
+
+        // Constructor for Airplane
+        public Airplane(String brand, double speed, int passengers, double price, double wingspan) {
+            super(brand, speed, passengers, price);
+            this.wingspan = wingspan;
+        }
+
+        // Getter for wingspan
+        public double getWingspan() {
+            return wingspan;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nWingspan: %.2f feet", wingspan);
+        }
+    }
+
+    // Subclass of Airplane: Jet
+    static class Jet extends Airplane {
+        private final double maxAltitude; // in feet
+
+        // Constructor for Jet
+        public Jet(String brand, double speed, int passengers, double price, double wingspan, double maxAltitude) {
+            super(brand, speed, passengers, price, wingspan);
+            this.maxAltitude = maxAltitude;
+        }
+
+        // Getter for max altitude
+        public double getMaxAltitude() {
+            return maxAltitude;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nMax Altitude: %.2f feet", maxAltitude);
+        }
+    }
+
+    // Subclass of Airplane: Helicopter
+    static class Helicopter extends Airplane {
+        private final int rotorBlades;
+
+        // Constructor for Helicopter
+        public Helicopter(String brand, double speed, int passengers, double price, double wingspan, int rotorBlades) {
+            super(brand, speed, passengers, price, wingspan);
+            this.rotorBlades = rotorBlades;
+        }
+
+        // Getter for rotor blades
+        public int getRotorBlades() {
+            return rotorBlades;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nRotor Blades: %d", rotorBlades);
+        }
+    }
+
+    // Motorcycle class inherits from Vehicle
+    static class Motorcycle extends Vehicle {
+        private final boolean hasSidecar;
+
+        // Constructor for Motorcycle
+        public Motorcycle(String brand, double speed, int passengers, double price, boolean hasSidecar) {
+            super(brand, speed, passengers, price);
+            this.hasSidecar = hasSidecar;
+        }
+
+        // Getter for sidecar status
+        public boolean hasSidecar() {
+            return hasSidecar;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nHas Sidecar: %b", hasSidecar);
+        }
+    }
+
+    // Bicycle class inherits from Vehicle
+    static class Bicycle extends Vehicle {
+        private final boolean isElectric;
+
+        // Constructor for Bicycle
+        public Bicycle(String brand, double speed, int passengers, double price, boolean isElectric) {
+            super(brand, speed, passengers, price);
+            this.isElectric = isElectric;
+        }
+
+        // Getter for electric status
+        public boolean isElectric() {
+            return isElectric;
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format("\nIs Electric: %b", isElectric);
+        }
+    }
+
+    // Main method to test all the vehicle types
+    public static void main(String[] args) {
+        // Testing various vehicles
+        Vehicle car = new Car("Toyota", 120, 5, 500, 30);
+        Vehicle electricCar = new ElectricCar("Tesla", 150, 4, 300, 0, 75);
+        Vehicle sportsCar = new SportsCar("Ferrari", 200, 2, 150, 15, 220);
+
+        Vehicle boat = new Boat("Yamaha", 50, 10, 1000, "Yacht");
+        Vehicle speedboat = new Speedboat("SeaRay", 60, 4, 500, "Speedboat", 500);
+        Vehicle yacht = new Yacht("Azimut", 40, 8, 2000, "Luxury Yacht", 5);
+
+        Vehicle airplane = new Airplane("Boeing", 500, 200, 5000, 200);
+        Vehicle jet = new Jet("F-22", 1500, 2, 1000, 40, 50000);
+        Vehicle helicopter = new Helicopter("Bell", 150, 5, 800, 50, 3);
+
+        Vehicle motorcycle = new Motorcycle("Harley", 100, 2, 20, true);
+        Vehicle bicycle = new Bicycle("Schwinn", 20, 1, 10, true);
+
+        // Print all vehicle details with headings for categories
+        System.out.println("### Cars ###");
+        System.out.println(car);
+        System.out.println();
+        System.out.println(electricCar);
+        System.out.println();
+        System.out.println(sportsCar);
+        System.out.println("\n### Boats ###");
+        System.out.println(boat);
+        System.out.println();
+        System.out.println(speedboat);
+        System.out.println();
+        System.out.println(yacht);
+        System.out.println("\n### Airplanes ###");
+        System.out.println(airplane);
+        System.out.println();
+        System.out.println(jet);
+        System.out.println();
+        System.out.println(helicopter);
+        System.out.println("\n### Motorcycles ###");
+        System.out.println(motorcycle);
+        System.out.println("\n### Bicycles ###");
+        System.out.println(bicycle);
+    }
+}
