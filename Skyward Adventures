@@ -1,3 +1,12 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author sashkar2025
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,12 +21,12 @@ public class SkywardAdventures extends JFrame {
     private static final int SPACESHIP_HEIGHT = 30;
     private static final int ASTEROID_RADIUS = 20;
     private static final int BULLET_RADIUS = 5;
-    
-    private Rectangle spaceship;
-    private int spaceshipSpeed = 5;
-    private ArrayList<Rectangle> bullets;
-    private ArrayList<Ellipse2D> asteroids;
-    private Timer gameTimer;
+
+    private final Rectangle spaceship;
+    private final int spaceshipSpeed = 5;
+    private final ArrayList<Rectangle> bullets;
+    private final ArrayList<Ellipse2D> asteroids;
+    private final Timer gameTimer;
     private boolean gameOver;
     private int score; // Total score
     private int currentScore; // Score for the current round
@@ -53,13 +62,10 @@ public class SkywardAdventures extends JFrame {
         });
 
         // Game Timer - Game Loop
-        gameTimer = new Timer(16, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!gameOver) {
-                    updateGame();
-                    repaint();
-                }
+        gameTimer = new Timer(16, (ActionEvent e) -> {
+            if (!gameOver) {
+                updateGame();
+                repaint();
             }
         });
         gameTimer.start();
@@ -179,8 +185,10 @@ public class SkywardAdventures extends JFrame {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        // Set anti-aliasing for smoother graphics
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Clear the screen before drawing
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, 0, WIDTH, HEIGHT);
 
         // Draw spaceship
         g2d.setColor(Color.BLUE);
@@ -193,29 +201,29 @@ public class SkywardAdventures extends JFrame {
         }
 
         // Draw asteroids
-        g2d.setColor(Color.GRAY);
+        g2d.setColor(Color.RED);
         for (Ellipse2D asteroid : asteroids) {
             g2d.fill(asteroid);
         }
 
         // Draw score, current score, and level
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(Color.RED);
         g2d.setFont(new Font("Arial", Font.BOLD, 20));
         g2d.drawString("Total Score: " + score, 10, 30);
-        g2d.drawString("Current Score: " + currentScore, 10, 60); // Display current score
+        g2d.drawString("Current Score: " + currentScore, 10, 60);
         g2d.drawString("Level: " + level, WIDTH - 100, 30);
         g2d.drawString("High Score: " + highScore, 10, 90);
 
-        // Display message when level increases
+        // Display message when level increases (Level up text stays solid)
         if (destroyedAsteroids == 0 && level > 1) {
-            g2d.setColor(Color.YELLOW);
+            g2d.setColor(Color.RED);
             g2d.setFont(new Font("Arial", Font.BOLD, 30));
             g2d.drawString("Level " + level + "!", WIDTH / 2 - 75, HEIGHT / 2);
         }
 
         // If the game is over, show a message and an option to play again
         if (gameOver) {
-            g2d.setColor(Color.WHITE);
+            g2d.setColor(Color.RED);
             g2d.setFont(new Font("Arial", Font.BOLD, 50));
             g2d.drawString("GAME OVER!", WIDTH / 2 - 150, HEIGHT / 2);
             g2d.setFont(new Font("Arial", Font.BOLD, 30));
@@ -224,12 +232,10 @@ public class SkywardAdventures extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                SkywardAdventures game = new SkywardAdventures();
-                game.setVisible(true);
-            }
+        SwingUtilities.invokeLater(() -> {
+            SkywardAdventures game = new SkywardAdventures();
+            game.setVisible(true);
         });
     }
 }
+
