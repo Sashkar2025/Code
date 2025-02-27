@@ -303,6 +303,7 @@ public class SpaceShooterGame extends JFrame {
         }
 
         if (gameOver) {
+            g2d.setColor(Color.YELLOW);
             g2d.setFont(new Font("Arial", Font.BOLD, 50));
             g2d.drawString("GAME OVER!", WIDTH / 2 - 150, HEIGHT / 2);
             g2d.setFont(new Font("Arial", Font.BOLD, 30));
