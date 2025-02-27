@@ -11,6 +11,7 @@ package com.mycompany.spaceshootergame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 // Base class for game objects
@@ -67,7 +68,13 @@ class Spaceship extends GameObject {
     public void update() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    // Get the bounding box for the spaceship (hitbox)
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
+    }
 }
+
 
 class Bullet extends GameObject {
     private static final int BULLET_WIDTH = 3;
@@ -106,7 +113,7 @@ class Asteroid extends GameObject {
 
     @Override
     public void update() {
-        y += speed; // Asteroid moves downwards with its current speed
+        y += speed; // Asteroid moves downwards
     }
 
     public void increaseSpeed(int speedIncrement) {
@@ -116,7 +123,13 @@ class Asteroid extends GameObject {
     public int getSpeed() {
         return speed;
     }
+
+    // Get the bounding box for the asteroid (hitbox)
+    public Rectangle getBounds() {
+        return new Rectangle(x+17, y, 5, 70);
+    }
 }
+
 
 public class SpaceShooterGame extends JFrame {
     private static final int WIDTH = 800;
@@ -171,13 +184,13 @@ public class SpaceShooterGame extends JFrame {
     private void handleKeyPress(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_LEFT && spaceship.x > 0) {
-            spaceship.x -= 5;
+            spaceship.x -= 10;
         } else if (keyCode == KeyEvent.VK_RIGHT && spaceship.x < WIDTH - spaceship.width) {
-            spaceship.x += 5;
+            spaceship.x += 10;
         } else if (keyCode == KeyEvent.VK_UP && spaceship.y > 0) {
-            spaceship.y -= 5;
+            spaceship.y -= 10;
         } else if (keyCode == KeyEvent.VK_DOWN && spaceship.y < HEIGHT - spaceship.height) {
-            spaceship.y += 5;
+            spaceship.y += 10;
         } else if (keyCode == KeyEvent.VK_SPACE) {
             shootBullet();
         } else if (keyCode == KeyEvent.VK_ENTER && gameOver) {
@@ -191,26 +204,39 @@ public class SpaceShooterGame extends JFrame {
     }
 
     private void updateGame() {
+        // If level up display is active, skip updating game objects (spaceship, asteroids)
+        if (levelUpDisplay) {
+            // If 3 seconds have passed since the level-up display started, stop the display
+            if (System.currentTimeMillis() - levelUpTime > 3000) {
+                levelUpDisplay = false; // End the level-up screen
+            }
+            return;
+        }
+
         ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
         ArrayList<Asteroid> asteroidsToRemove = new ArrayList<>();
 
+        // Update the bullets
         for (Bullet bullet : bullets) {
             bullet.update();
         }
 
-        if (Math.random() < 0.02) {
+        // Create a new asteroid based on random chance
+        if (Math.random() < 0.05) {
             createAsteroid();
         }
 
+        // Update asteroids and check for collisions
         for (Asteroid asteroid : asteroids) {
             asteroid.update();
 
-            if (spaceship.x + spaceship.width > asteroid.x && spaceship.x < asteroid.x + asteroid.width
-                    && spaceship.y + spaceship.height > asteroid.y && spaceship.y < asteroid.y + asteroid.height) {
+            // Check if spaceship collided with asteroid
+            if (spaceship.getBounds().intersects(asteroid.getBounds())) {
                 gameOver = true;
                 updateHighScore();
-            }
-
+            }   
+            
+            // Check for bullet-asteroid collisions
             for (Bullet bullet : bullets) {
                 if (bullet.x + bullet.width > asteroid.x && bullet.x < asteroid.x + asteroid.width
                         && bullet.y + bullet.height > asteroid.y && bullet.y < asteroid.y + asteroid.height) {
@@ -223,21 +249,20 @@ public class SpaceShooterGame extends JFrame {
             }
         }
 
+        // Remove destroyed asteroids and bullets
         asteroids.removeAll(asteroidsToRemove);
         bullets.removeAll(bulletsToRemove);
 
+        // Remove asteroids that are off the screen
         asteroids.removeIf(asteroid -> asteroid.y > HEIGHT);
 
+        // Level up condition
         if (destroyedAsteroids >= 5) {
             level++;
             destroyedAsteroids = 0;
             levelUpDisplay = true;
             levelUpTime = System.currentTimeMillis();
             increaseAsteroidSpeed();
-        }
-
-        if (levelUpDisplay && System.currentTimeMillis() - levelUpTime > 2000) {
-            levelUpDisplay = false;
         }
     }
 
