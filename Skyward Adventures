@@ -11,7 +11,6 @@ package com.mycompany.spaceshootergame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 // Base class for game objects
@@ -19,6 +18,7 @@ abstract class GameObject {
     protected int x, y;
     protected int width, height;
 
+    // Constructor to initialize the position and size of the game object
     public GameObject(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
@@ -26,16 +26,19 @@ abstract class GameObject {
         this.height = height;
     }
 
+    // Abstract method to draw the object
     public abstract void draw(Graphics2D g2d);
 
+    // Abstract method to update the object (move, animate, etc.)
     public abstract void update();
 }
 
-// Inherits from game object
+// Inherits from game object and represents the spaceship
 class Spaceship extends GameObject {
     private static final int SPACESHIP_WIDTH = 60;
     private static final int SPACESHIP_HEIGHT = 40;
 
+    // Constructor to initialize the spaceship with position
     public Spaceship(int x, int y) {
         super(x, y, SPACESHIP_WIDTH, SPACESHIP_HEIGHT);
     }
@@ -75,11 +78,12 @@ class Spaceship extends GameObject {
     }
 }
 
-
+// Class for bullet objects fired by the spaceship
 class Bullet extends GameObject {
     private static final int BULLET_WIDTH = 3;
     private static final int BULLET_HEIGHT = 12;
 
+    // Constructor to initialize the bullet position
     public Bullet(int x, int y) {
         super(x, y, BULLET_WIDTH * 2, BULLET_HEIGHT * 2);
     }
@@ -87,7 +91,7 @@ class Bullet extends GameObject {
     @Override
     public void draw(Graphics2D g2d) {
         g2d.setColor(Color.RED);
-        g2d.fillOval(x, y, width, height);
+        g2d.fillOval(x, y, width, height); // Draw the bullet as a red oval
     }
 
     @Override
@@ -96,10 +100,12 @@ class Bullet extends GameObject {
     }
 }
 
+// Class for asteroid objects that the spaceship must avoid
 class Asteroid extends GameObject {
     private static final int ASTEROID_RADIUS = 20;
     private int speed;  // Speed of the asteroid
 
+    // Constructor to initialize asteroid position and speed
     public Asteroid(int x, int y, int speed) {
         super(x, y, ASTEROID_RADIUS * 2, ASTEROID_RADIUS * 2);
         this.speed = speed;
@@ -108,7 +114,7 @@ class Asteroid extends GameObject {
     @Override
     public void draw(Graphics2D g2d) {
         g2d.setColor(Color.GRAY);
-        g2d.fillOval(x, y, width, height);
+        g2d.fillOval(x, y, width, height); // Draw the asteroid as a gray circle
     }
 
     @Override
@@ -126,27 +132,61 @@ class Asteroid extends GameObject {
 
     // Get the bounding box for the asteroid (hitbox)
     public Rectangle getBounds() {
-        return new Rectangle(x+17, y, 5, 70);
+        return new Rectangle(x + 17, y, 5, 70); // Rough hitbox based on asteroid shape
     }
 }
 
+// Class for star objects that appear in the background
+class Star extends GameObject {
+    private static final int STAR_RADIUS = 4;
+    private int speed;  // Speed of the star
 
+    // Constructor to initialize star position and speed
+    public Star(int x, int y, int speed) {
+        super(x, y, STAR_RADIUS * 2, STAR_RADIUS * 2);
+        this.speed = speed;
+    }
+
+    @Override
+    public void draw(Graphics2D g2d) {
+        g2d.setColor(Color.WHITE);
+        g2d.fillOval(x, y, width, height); // Draw the star as a white circle
+    }
+
+    @Override
+    public void update() {
+        y += speed; // Star moves downwards
+    }
+
+    public void increaseSpeed(int speedIncrement) {
+        this.speed += speedIncrement;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+}
+
+// Main game class extending JFrame to set up the GUI and gameplay logic
 public class SpaceShooterGame extends JFrame {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 1920;
+    private static final int HEIGHT = 1080;
 
-    private Spaceship spaceship;
-    private final ArrayList<Bullet> bullets;
-    private final ArrayList<Asteroid> asteroids;
-    private final Timer gameTimer;
-    private boolean gameOver;
-    private int score;
-    private int highScore;
-    private int level;
-    private int destroyedAsteroids;
-    private boolean levelUpDisplay;
-    private long levelUpTime;
+    private Spaceship spaceship; // Player's spaceship
+    private final ArrayList<Bullet> bullets; // List to store bullets
+    private final ArrayList<Asteroid> asteroids; // List to store asteroids
+    private final ArrayList<Star> stars; // List to store stars (background elements)
+    private final Timer gameTimer; // Timer to refresh the game state
+    private boolean gameOver; // Flag to indicate if the game is over
+    private int score; // Player's score
+    private int highScore; // High score
+    private int level; // Current game level
+    private int destroyedAsteroids; // Number of asteroids destroyed
+    private boolean levelUpDisplay; // Flag to show the level-up message
+    private long levelUpTime; // Time when level-up message was displayed
+    private boolean paused; // Flag to pause the game
 
+    // Constructor to set up the game window and initial values
     public SpaceShooterGame() {
         setTitle("Space Shooter Game");
         setSize(WIDTH, HEIGHT);
@@ -157,122 +197,166 @@ public class SpaceShooterGame extends JFrame {
         spaceship = new Spaceship(WIDTH / 2 - 25, HEIGHT - 50);
         bullets = new ArrayList<>();
         asteroids = new ArrayList<>();
+        stars = new ArrayList<>();
         gameOver = false;
         score = 0;
         highScore = 0;
         level = 1;
         destroyedAsteroids = 0;
         levelUpDisplay = false;
+        paused = false;
         levelUpTime = 0;
 
+        // Add key listener to control the spaceship
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                handleKeyPress(e);
+                handleKeyPress(e); // Handle key press events
             }
         });
 
+        // Game timer to refresh game state every 16 milliseconds (~60 FPS)
         gameTimer = new Timer(16, (ActionEvent e) -> {
             if (!gameOver) {
-                updateGame();
-                repaint();
+                updateGame(); // Update game objects
+                repaint(); // Redraw the game screen
             }
         });
         gameTimer.start();
+
+        // Ensure window has focus for key events
+        requestFocusInWindow();
     }
 
+    // Handle key press events for controlling spaceship and restarting game
     private void handleKeyPress(KeyEvent e) {
         int keyCode = e.getKeyCode();
+
+        // If the game is paused (during level-up), prevent any actions
+        if (paused) {
+            return;
+        }
+
         if (keyCode == KeyEvent.VK_LEFT && spaceship.x > 0) {
-            spaceship.x -= 10;
+            spaceship.x -= 10; // Move spaceship left
         } else if (keyCode == KeyEvent.VK_RIGHT && spaceship.x < WIDTH - spaceship.width) {
-            spaceship.x += 10;
+            spaceship.x += 10; // Move spaceship right
         } else if (keyCode == KeyEvent.VK_UP && spaceship.y > 0) {
-            spaceship.y -= 10;
+            spaceship.y -= 10; // Move spaceship up
         } else if (keyCode == KeyEvent.VK_DOWN && spaceship.y < HEIGHT - spaceship.height) {
-            spaceship.y += 10;
+            spaceship.y += 10; // Move spaceship down
         } else if (keyCode == KeyEvent.VK_SPACE) {
-            shootBullet();
+            shootBullet();  // Fire a bullet
         } else if (keyCode == KeyEvent.VK_ENTER && gameOver) {
-            restartGame();
+            restartGame(); // Restart the game if it is over
         }
     }
 
+    // Create and add a new bullet to the list of bullets
     private void shootBullet() {
-        Bullet bullet = new Bullet(spaceship.x + spaceship.width / 2 - 2 , spaceship.y - 40);
+        if (paused) {
+            return; // Prevent shooting while paused
+        }
+
+        Bullet bullet = new Bullet(spaceship.x + spaceship.width / 2 - 2, spaceship.y - 40);
         bullets.add(bullet);
     }
 
+    // Update game objects, check for collisions, and handle level-ups
     private void updateGame() {
-        // If level up display is active, skip updating game objects (spaceship, asteroids)
         if (levelUpDisplay) {
-            // If 3 seconds have passed since the level-up display started, stop the display
             if (System.currentTimeMillis() - levelUpTime > 3000) {
-                levelUpDisplay = false; // End the level-up screen
+                levelUpDisplay = false; // End the level-up screen after 3 seconds
+                paused = false;         // Unpause the game
             }
             return;
         }
 
         ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
         ArrayList<Asteroid> asteroidsToRemove = new ArrayList<>();
+        ArrayList<Star> starsToRemove = new ArrayList<>();
 
-        // Update the bullets
-        for (Bullet bullet : bullets) {
-            bullet.update();
-        }
-
-        // Create a new asteroid based on random chance
-        if (Math.random() < 0.05) {
-            createAsteroid();
-        }
-
-        // Update asteroids and check for collisions
-        for (Asteroid asteroid : asteroids) {
-            asteroid.update();
-
-            // Check if spaceship collided with asteroid
-            if (spaceship.getBounds().intersects(asteroid.getBounds())) {
-                gameOver = true;
-                updateHighScore();
-            }   
-            
-            // Check for bullet-asteroid collisions
+        if (!paused) {
+            // Update bullets
             for (Bullet bullet : bullets) {
-                if (bullet.x + bullet.width > asteroid.x && bullet.x < asteroid.x + asteroid.width
-                        && bullet.y + bullet.height > asteroid.y && bullet.y < asteroid.y + asteroid.height) {
-                    asteroidsToRemove.add(asteroid);
-                    bulletsToRemove.add(bullet);
-                    destroyedAsteroids++;
-                    score += 10;
-                    break;  // Only one bullet can destroy an asteroid
+                bullet.update();
+            }
+
+            // Random chance to create a new asteroid or star
+            if (Math.random() < 0.05) {
+                createAsteroid();
+            }
+            if (Math.random() < 0.4) {
+                createStar();
+            }
+
+            // Update and check collisions for asteroids
+            for (Asteroid asteroid : asteroids) {
+                asteroid.update();
+
+                // Check for collision with spaceship
+                if (spaceship.getBounds().intersects(asteroid.getBounds())) {
+                    gameOver = true;
+                    updateHighScore();
+                }
+
+                // Check for collision with bullets
+                for (Bullet bullet : bullets) {
+                    if (bullet.x + bullet.width > asteroid.x && bullet.x < asteroid.x + asteroid.width
+                            && bullet.y + bullet.height > asteroid.y && bullet.y < asteroid.y + asteroid.height) {
+                        asteroidsToRemove.add(asteroid);
+                        bulletsToRemove.add(bullet);
+                        destroyedAsteroids++;
+                        score += 10;
+                        break;  // Only one bullet can destroy an asteroid
+                    }
                 }
             }
-        }
 
-        // Remove destroyed asteroids and bullets
-        asteroids.removeAll(asteroidsToRemove);
-        bullets.removeAll(bulletsToRemove);
+            // Update stars and remove those that go off-screen
+            for (Star star : stars) {
+                star.update();
+                if (star.y > HEIGHT) {
+                    starsToRemove.add(star);
+                }
+            }
 
-        // Remove asteroids that are off the screen
-        asteroids.removeIf(asteroid -> asteroid.y > HEIGHT);
+            // Remove destroyed asteroids and bullets from the game
+            asteroids.removeAll(asteroidsToRemove);
+            bullets.removeAll(bulletsToRemove);
+            stars.removeAll(starsToRemove);
 
-        // Level up condition
-        if (destroyedAsteroids >= 5) {
-            level++;
-            destroyedAsteroids = 0;
-            levelUpDisplay = true;
-            levelUpTime = System.currentTimeMillis();
-            increaseAsteroidSpeed();
+            // Remove asteroids that have gone off the bottom of the screen
+            asteroids.removeIf(asteroid -> asteroid.y > HEIGHT);
+
+            // Handle level-up condition
+            if (destroyedAsteroids >= 5) {
+                level++;
+                destroyedAsteroids = 0;
+                levelUpDisplay = true;
+                paused = true;
+                levelUpTime = System.currentTimeMillis();
+                increaseAsteroidSpeed();
+                increaseStarSpeed();
+            }
         }
     }
 
+    // Create a new asteroid at a random x position with level-based speed
     private void createAsteroid() {
         int x = (int) (Math.random() * (WIDTH - 40));
-        // Use the current level to set the speed for new asteroids
         int speed = 2 + level - 1; // Speed increases as level increases
         asteroids.add(new Asteroid(x, 0, speed));
     }
 
+    // Create a new star at a random x position with level-based speed
+    private void createStar() {
+        int x = (int) (Math.random() * (WIDTH - 40));
+        int speed = 2 + level - 1; // Speed increases as level increases
+        stars.add(new Star(x, 0, speed));
+    }
+
+    // Increase the speed of all asteroids based on level-up
     private void increaseAsteroidSpeed() {
         int speedIncrement = 1;
         for (Asteroid asteroid : asteroids) {
@@ -280,16 +364,27 @@ public class SpaceShooterGame extends JFrame {
         }
     }
 
+    // Increase the speed of all stars based on level-up
+    private void increaseStarSpeed() {
+        int speedIncrement = 1;
+        for (Star star : stars) {
+            star.increaseSpeed(speedIncrement);
+        }
+    }
+
+    // Update high score if the current score exceeds the previous high score
     private void updateHighScore() {
         if (score > highScore) {
             highScore = score;
         }
     }
 
+    // Restart the game by resetting all variables
     private void restartGame() {
         spaceship = new Spaceship(WIDTH / 2 - 25, HEIGHT - 50);
         bullets.clear();
         asteroids.clear();
+        stars.clear();
         gameOver = false;
         score = 0;
         level = 1;
@@ -302,8 +397,14 @@ public class SpaceShooterGame extends JFrame {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
 
+        // Fill background with black color
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, WIDTH, HEIGHT);
+
+        // Draw stars, spaceship, bullets, and asteroids
+        for (Star star : stars) {
+            star.draw(g2d);
+        }
 
         spaceship.draw(g2d);
 
@@ -315,18 +416,21 @@ public class SpaceShooterGame extends JFrame {
             asteroid.draw(g2d);
         }
 
+        // Display score, level, and high score on the screen
         g2d.setColor(Color.RED);
         g2d.setFont(new Font("Arial", Font.BOLD, 20));
         g2d.drawString("Score: " + score, 10, 90);
         g2d.drawString("Level: " + level, WIDTH - 100, 30);
         g2d.drawString("High Score: " + highScore, 10, 60);
 
+        // Display level-up message
         if (levelUpDisplay) {
             g2d.setColor(Color.YELLOW);
             g2d.setFont(new Font("Arial", Font.BOLD, 50));
             g2d.drawString("LEVEL " + level, WIDTH / 2 - 100, HEIGHT / 2);
         }
 
+        // Display game-over message
         if (gameOver) {
             g2d.setColor(Color.YELLOW);
             g2d.setFont(new Font("Arial", Font.BOLD, 50));
@@ -336,10 +440,11 @@ public class SpaceShooterGame extends JFrame {
         }
     }
 
+    // Main method to start the game
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             SpaceShooterGame game = new SpaceShooterGame();
-            game.setVisible(true);
+            game.setVisible(true); // Make the game window visible
         });
     }
-}
+}  
