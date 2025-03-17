@@ -1,0 +1,88 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.polymorphism;
+
+/**
+ *
+ * @author sashkar2025
+ */
+import java.util.ArrayList;
+
+// Base class
+class Aircraft {
+    private final String wings;
+
+    public Aircraft(String wings) {
+        this.wings = wings;
+    }
+
+    public String getWings() {
+        return wings;
+    }
+
+    @Override
+    public String toString() {
+        return "Aircraft with wings: " + wings;
+    }
+}
+
+// Derived class SingleEnginePlane
+class SingleEnginePlane extends Aircraft {
+    private final String engineType;
+
+    public SingleEnginePlane(String wings, String engineType) {
+        super(wings);
+        this.engineType = engineType;
+    }
+
+    public String getEngineType() {
+        return engineType;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Engine Type: " + engineType;
+    }
+}
+
+// Derived class Helicopter
+class Helicopter extends SingleEnginePlane {
+    private final String helicopterBlades;
+
+    public Helicopter(String wings, String engineType, String helicopterBlades) {
+        super(wings, engineType);
+        this.helicopterBlades = helicopterBlades;
+    }
+
+    public String getHelicopterBlades() {
+        return helicopterBlades;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Helicopter Blades: " + helicopterBlades;
+    }
+}
+
+public class Polymorphism {
+    public static void main(String[] args) {
+        // Create instances of Aircraft, SingleEnginePlane, and Helicopter
+        Aircraft aircraft = new Aircraft("Fixed");
+        SingleEnginePlane plane = new SingleEnginePlane("Fixed", "Rotary Engine");
+        Helicopter helicopter = new Helicopter("Rotary", "Rotary Engine", "Four Helicopter Blades");
+
+        // Place them in an ArrayList
+        ArrayList<Aircraft> aircraftList = new ArrayList<>();
+        aircraftList.add(aircraft);
+        aircraftList.add(plane);
+        aircraftList.add(helicopter);
+
+        // Print each object using polymorphism
+        for (Aircraft a : aircraftList) {
+            System.out.println(a);
+        }
+    }
+}
+
