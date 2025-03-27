@@ -1,0 +1,41 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.recursion;
+
+/**
+ *
+ * @author sashkar2025
+ */
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Recursion {
+    // Function to compute an element in Pascal's Triangle using recursion
+    public static int pascalElement(int row, int col) {
+        if (col == 0 || col == row) {
+            return 1;  // First and last elements are always 1
+        }
+        return pascalElement(row - 1, col - 1) + pascalElement(row - 1, col);
+    }
+
+    // Function to compute and print the Nth row of Pascal's Triangle
+    public static int[] getPascalsRow(int n) {
+        int[] row = new int[n + 1];
+        for (int i = 0; i <= n; i++) {
+            row[i] = pascalElement(n, i);
+        }
+        return row;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter row number N: ");
+        int n = scanner.nextInt();
+        scanner.close();
+
+        int[] row = getPascalsRow(n);
+        System.out.println("Row " + n + " of Pascal's Triangle: " + Arrays.toString(row));
+    }
+}
