@@ -1,1 +1,318 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.guiproject;
+
+/**
+ *
+ * @author sashkar2025
+ */
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
+import java.io.File;
+import javax.sound.sampled.*;
+
+public class GUIproject extends JFrame {
+    private final Container c;
+    private final JButton addCourseButton;
+    private final JButton addCategoryButton;
+    private final JButton calculateButton;
+    private final JButton viewGradesButton;
+    private final JTextArea displayArea;
+    private final ArrayList<Course> courses;
+
+    public GUIproject() {
+        setTitle("Student Grade Viewer and Overall Grade Calculator");
+        setBounds(100, 100, 600, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(true);
+        c = getContentPane();
+        c.setLayout(null);
+
+        courses = new ArrayList<>();
+
+        // Add Course Button
+        addCourseButton = new JButton("Add Course");
+        addCourseButton.setBounds(50, 50, 150, 30);
+        addCourseButton.addActionListener(e -> {
+            playButtonSound();
+            addCourse();
+        });
+        c.add(addCourseButton);
+
+        // Add Category Button
+        addCategoryButton = new JButton("Add Category");
+        addCategoryButton.setBounds(50, 100, 150, 30);
+        addCategoryButton.addActionListener(e -> {
+            playButtonSound();
+            addCategory();
+        });
+        c.add(addCategoryButton);
+
+        // Calculate Overall Grade Button
+        calculateButton = new JButton("Calculate Overall Grade");
+        calculateButton.setBounds(50, 150, 200, 30);
+        calculateButton.addActionListener(e -> {
+            playButtonSound();
+            calculateOverallGrade();
+        });
+        c.add(calculateButton);
+
+        // View Grades Button
+        viewGradesButton = new JButton("View Grades");
+        viewGradesButton.setBounds(50, 200, 150, 30);
+        viewGradesButton.addActionListener(e -> {
+            playButtonSound();
+            viewGrades();
+        });
+        c.add(viewGradesButton);
+
+        // Display Area
+        displayArea = new JTextArea();
+        displayArea.setBounds(250, 50, 300, 300);
+        displayArea.setEditable(false);
+        c.add(displayArea);
+
+        setVisible(true);
+    }
+
+    // Play sound when button is clicked
+    private void playButtonSound() {
+        try {
+            File soundFile = new File("button_click_sound.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Add a course
+    private void addCourse() {
+        String courseName = JOptionPane.showInputDialog(this, "Enter Course Name:");
+        if (courseName != null && !courseName.trim().isEmpty()) {
+            courses.add(new Course(courseName));
+            JOptionPane.showMessageDialog(this, "Course Added: " + courseName);
+        }
+    }
+
+    // Add a category to the selected course
+    private void addCategory() {
+        if (courses.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please add a course first.");
+            return;
+        }
+        String courseName = (String) JOptionPane.showInputDialog(this, "Select Course to Add Category:", 
+                "Choose Course", JOptionPane.PLAIN_MESSAGE, null, getCourseNames(), null);
+        
+        if (courseName != null) {
+            Course selectedCourse = getCourseByName(courseName);
+            if (selectedCourse != null) {
+                double totalWeight = 0;
+                boolean addingCategories = true;
+                while (addingCategories) {
+                    String categoryName = JOptionPane.showInputDialog(this, "Enter Category Name:");
+                    if (categoryName != null && !categoryName.trim().isEmpty()) {
+                        double weight = Double.parseDouble(JOptionPane.showInputDialog(this, "Enter Weight Percentage for " + categoryName + ":"));
+                        if (totalWeight + weight > 100) {
+                            JOptionPane.showMessageDialog(this, "Total weight cannot exceed 100%. Please adjust the weight.");
+                            continue;
+                        }
+                        selectedCourse.addCategory(new GradeCategory(categoryName, weight));
+
+                        // Add assignments to this category
+                        addAssignmentsToCategory(selectedCourse, categoryName);
+
+                        totalWeight += weight;
+                    }
+
+                    // Check if total weight is 100%, if so, stop adding categories
+                    if (totalWeight == 100) {
+                        JOptionPane.showMessageDialog(this, "Categories added successfully.");
+                        addingCategories = false;
+                    } else if (totalWeight > 100) {
+                        JOptionPane.showMessageDialog(this, "The total weight cannot exceed 100%. Please re-enter categories.");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // Add assignments to a category
+    private void addAssignmentsToCategory(Course selectedCourse, String categoryName) {
+        GradeCategory category = selectedCourse.getCategoryByName(categoryName);
+        if (category != null) {
+            boolean addingAssignments = true;
+            while (addingAssignments) {
+                String assignmentInput = JOptionPane.showInputDialog(this, "Enter Assignment Points (e.g., 13/16):");
+                if (assignmentInput != null && !assignmentInput.trim().isEmpty()) {
+                    try {
+                        String[] parts = assignmentInput.split("/");
+                        int pointsEarned = Integer.parseInt(parts[0]);
+                        int pointsPossible = Integer.parseInt(parts[1]);
+                        category.addAssignment(new Assignment(pointsEarned, pointsPossible));
+                        int totalAssignments = category.getAssignments().size();
+                        JOptionPane.showMessageDialog(this, "Assignment Added: " + pointsEarned + "/" + pointsPossible);
+                        int moreAssignments = JOptionPane.showConfirmDialog(this, "Do you want to add another assignment?", "Add More", JOptionPane.YES_NO_OPTION);
+                        if (moreAssignments == JOptionPane.NO_OPTION) {
+                            addingAssignments = false;
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Invalid assignment format. Please use 'pointsEarned/pointsPossible'.");
+                    }
+                }
+            }
+        }
+    }
+
+    // Calculate the overall grade for a student
+    private void calculateOverallGrade() {
+        String courseName = (String) JOptionPane.showInputDialog(this, "Select Course to Calculate Overall Grade:", 
+                "Choose Course", JOptionPane.PLAIN_MESSAGE, null, getCourseNames(), null);
+        
+        if (courseName != null) {
+            Course selectedCourse = getCourseByName(courseName);
+            if (selectedCourse != null) {
+                double overallGrade = 0;
+                for (GradeCategory category : selectedCourse.getCategories()) {
+                    // Calculate average percentage for each category
+                    double categoryTotal = 0;
+                    for (Assignment assignment : category.getAssignments()) {
+                        categoryTotal += (double) assignment.getPointsEarned() / assignment.getPointsPossible();
+                    }
+                    double categoryAverage = categoryTotal / category.getAssignments().size();
+
+                    // Weight the category average by the category's weight
+                    overallGrade += categoryAverage * (category.getWeight() / 100);
+                }
+                // Display the overall grade as a percentage
+                JOptionPane.showMessageDialog(this, "Overall Grade for " + courseName + ": " + String.format("%.2f", overallGrade * 100) + "%");
+            }
+        }
+    }
+
+    // View all grades and categories for each course
+    private void viewGrades() {
+        StringBuilder grades = new StringBuilder();
+        for (Course course : courses) {
+            grades.append("Course: ").append(course.getName()).append("\n");
+            for (GradeCategory category : course.getCategories()) {
+                grades.append("  Category: ").append(category.getName())
+                      .append(" (Weight: ").append(category.getWeight()).append("%)\n");
+                for (Assignment assignment : category.getAssignments()) {
+                    grades.append("    Assignment: ").append(assignment.getPointsEarned())
+                          .append("/").append(assignment.getPointsPossible()).append("\n");
+                }
+            }
+            grades.append("\n");
+        }
+        displayArea.setText(grades.toString());
+    }
+
+    // Get all course names for the combo box
+    private String[] getCourseNames() {
+        String[] courseNames = new String[courses.size()];
+        for (int i = 0; i < courses.size(); i++) {
+            courseNames[i] = courses.get(i).getName();
+        }
+        return courseNames;
+    }
+
+    // Find a course by its name
+    private Course getCourseByName(String name) {
+        for (Course course : courses) {
+            if (course.getName().equals(name)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
+    // Main method to run the program
+    public static void main(String[] args) {
+        new GUIproject();
+    }
+}
+
+class Course {
+    private String name;
+    private ArrayList<GradeCategory> categories;
+
+    public Course(String name) {
+        this.name = name;
+        this.categories = new ArrayList<>();
+    }
+
+    public void addCategory(GradeCategory category) {
+        categories.add(category);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<GradeCategory> getCategories() {
+        return categories;
+    }
+
+    public GradeCategory getCategoryByName(String name) {
+        for (GradeCategory category : categories) {
+            if (category.getName().equals(name)) {
+                return category;
+            }
+        }
+        return null;
+    }
+}
+
+class GradeCategory {
+    private String name;
+    private double weight;
+    private ArrayList<Assignment> assignments;
+
+    public GradeCategory(String name, double weight) {
+        this.name = name;
+        this.weight = weight;
+        this.assignments = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public ArrayList<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void addAssignment(Assignment assignment) {
+        assignments.add(assignment);
+    }
+}
+
+class Assignment {
+    private int pointsEarned;
+    private int pointsPossible;
+
+    public Assignment(int pointsEarned, int pointsPossible) {
+        this.pointsEarned = pointsEarned;
+        this.pointsPossible = pointsPossible;
+    }
+
+    public int getPointsEarned() {
+        return pointsEarned;
+    }
+
+    public int getPointsPossible() {
+        return pointsPossible;
+    }
+}
 
